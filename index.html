@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketing Master Tool | V8.6.0</title>
+    <title>Marketing Master Tool | V8.7.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -32,7 +32,7 @@
     <aside class="sidebar custom-scroll no-print">
         <div class="flex items-center gap-3 mb-8">
             <span class="text-3xl">🚀</span>
-            <div><h1 class="text-lg font-black italic text-white uppercase tracking-tighter leading-none">Marketing Master</h1><p class="text-[9px] font-bold text-indigo-400 uppercase tracking-widest mt-1">v8.6.0</p></div>
+            <div><h1 class="text-lg font-black italic text-white uppercase tracking-tighter leading-none">Marketing Master</h1><p class="text-[9px] font-bold text-indigo-400 uppercase tracking-widest mt-1">v8.7.0</p></div>
         </div>
 
         <div class="bg-slate-900/80 p-5 rounded-3xl border border-white/5 mb-6">
@@ -44,9 +44,9 @@
                 <div><p class="text-[8px] font-bold text-slate-500 uppercase">Revenue</p><p id="stat-revenue" class="text-xs font-black text-emerald-400">RM 0.00</p></div>
                 <div class="text-right"><p class="text-[8px] font-bold text-slate-500 uppercase">Expenses</p><p id="stat-expense" class="text-xs font-black text-red-400">RM 0.00</p></div>
             </div>
-            <div class="mt-4 pt-4 border-t border-white/5 flex justify-between items-end">
-                <div><p class="text-[8px] font-bold text-slate-500 uppercase">Net Profit</p><p id="stat-profit" class="text-xl font-black text-white italic">RM 0.00</p></div>
-                <button onclick="toggleReport()" class="bg-indigo-600 p-2 rounded-lg text-[9px] font-black uppercase italic">Report</button>
+            <div class="mt-4 pt-4 border-t border-white/5">
+                <p class="text-[8px] font-bold text-slate-500 uppercase">Net Profit</p>
+                <p id="stat-profit" class="text-xl font-black text-white italic">RM 0.00</p>
             </div>
         </div>
 
@@ -60,7 +60,7 @@
             </select>
             <select id="client-dropdown" onchange="applyClient(this.value)" class="w-full bg-slate-800 rounded-xl p-4 text-xs font-bold text-indigo-300 outline-none border border-indigo-500/20"></select>
             <button onclick="toggleCanvas()" class="w-full py-3 bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 rounded-xl font-black text-[10px] uppercase">Toggle Workspace</button>
-            <button onclick="addRow()" class="w-full py-4 bg-indigo-600 text-white rounded-xl font-black text-[10px] uppercase italic shadow-lg">＋ Add Line Item</button>
+            <button onclick="addRow()" class="w-full py-4 bg-indigo-600 text-white rounded-xl font-black text-[10px] uppercase italic">＋ Add Line Item</button>
             <div class="flex gap-2">
                 <button onclick="saveToLedger('INCOME')" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-black text-[10px] uppercase">Save Doc</button>
                 <button onclick="promptExpense()" class="flex-1 py-3 bg-red-600 text-white rounded-xl font-black text-[10px] uppercase">Add Cost</button>
@@ -103,7 +103,7 @@
             <div class="mt-auto flex justify-between items-end border-t border-slate-100 pt-12">
                 <div class="w-1/2">
                     <div class="bg-slate-50 p-6 rounded-2xl border mb-6 relative">
-                        <p class="data-label">Payments</p><p id="bank-details" contenteditable="true" oninput="saveBankDetails()" class="text-[10px] font-black italic">BANK INFO</p>
+                        <p class="data-label">Payments</p><p id="bank-details" contenteditable="true" class="text-[10px] font-black italic">BANK INFO</p>
                     </div>
                     <div><p class="data-label">Authorized Signature</p><canvas id="sig-canvas" width="250" height="80"></canvas><button onclick="clearSig()" class="no-print text-[8px] font-black text-slate-400 uppercase mt-2">[ Clear ]</button></div>
                 </div>
@@ -114,7 +114,7 @@
 
     <div id="blast-modal" class="hidden fixed inset-0 bg-slate-900/95 z-[950] flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white rounded-[3rem] p-10 w-full max-w-6xl shadow-2xl overflow-y-auto max-h-[90vh]">
-            <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic tracking-tighter">Auto-Pilot <span class="text-green-500">v8.6.0</span></h3><button onclick="toggleBlast()" class="text-3xl font-black">×</button></div>
+            <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic tracking-tighter">Auto-Pilot <span class="text-green-500">v8.7.0</span></h3><button onclick="toggleBlast()" class="text-3xl font-black">×</button></div>
             <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
                 <div class="md:col-span-4 space-y-6">
                     <div class="bg-slate-50 p-6 rounded-[2rem] border">
@@ -122,7 +122,7 @@
                         <input type="number" id="blast-delay" value="5" min="0" max="999" class="w-full bg-white border p-4 rounded-2xl font-black text-center text-lg mb-4 outline-none">
                         <p class="text-[10px] font-bold text-slate-400 mb-2 uppercase italic">Select Message Image</p>
                         <input type="file" id="blast-img-select" class="w-full text-[10px] font-black uppercase bg-white p-4 rounded-2xl border mb-6">
-                        <button id="auto-pilot-btn" onclick="startAutoPilot()" class="w-full py-5 bg-green-600 text-white rounded-[2rem] font-black text-sm uppercase italic shadow-lg">One-Click Auto Blast</button>
+                        <button id="auto-pilot-btn" onclick="startAutoPilot()" class="w-full py-5 bg-green-600 text-white rounded-[2rem] font-black text-sm uppercase italic">One-Click Auto Blast</button>
                     </div>
                 </div>
                 <div class="md:col-span-8"><textarea id="blast-msg" class="w-full h-40 bg-slate-50 rounded-[2rem] p-6 text-sm font-bold italic border mb-6">Hello [Name], total: RM [Total].</textarea><div id="blast-list" class="space-y-2 h-64 overflow-y-auto custom-scroll pr-2"></div></div>
@@ -132,45 +132,45 @@
 
     <div id="db-modal" class="hidden fixed inset-0 bg-slate-950/95 z-[900] flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white rounded-[3rem] p-10 w-full max-w-6xl shadow-2xl overflow-y-auto max-h-[95vh]">
-            <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic tracking-tighter">Database Hub</h3><button onclick="toggleDb()" class="text-3xl font-black">×</button></div>
+            <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic tracking-tighter">Database & Settings</h3><button onclick="toggleDb()" class="text-3xl font-black">×</button></div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
                 <div class="bg-slate-50 p-6 rounded-3xl border">
-                    <h4 class="text-[10px] font-black text-indigo-600 uppercase mb-4 tracking-widest italic">Easy Inventory Entry</h4>
+                    <h4 class="text-[10px] font-black text-indigo-600 uppercase mb-4 italic">Inventory Quick-Add</h4>
                     <div class="flex gap-2">
                         <input id="f-inv-n" placeholder="Item Name" class="flex-1 p-3 rounded-xl border text-xs font-bold uppercase">
                         <input id="f-inv-s" placeholder="Price" class="w-24 p-3 rounded-xl border text-xs font-bold">
-                        <button onclick="quickAdd('INV')" class="bg-indigo-600 text-white px-6 rounded-xl font-black uppercase text-[10px]">Add Item</button>
+                        <button onclick="quickAdd('INV')" class="bg-indigo-600 text-white px-6 rounded-xl font-black uppercase text-[10px]">Add</button>
                     </div>
                 </div>
                 <div class="bg-slate-50 p-6 rounded-3xl border">
-                    <h4 class="text-[10px] font-black text-emerald-600 uppercase mb-4 tracking-widest italic">Easy Client Entry</h4>
+                    <h4 class="text-[10px] font-black text-emerald-600 uppercase mb-4 italic">Client Quick-Add</h4>
                     <div class="flex gap-2">
                         <input id="f-cli-n" placeholder="Name" class="flex-1 p-3 rounded-xl border text-xs font-bold uppercase">
                         <input id="f-cli-p" placeholder="WhatsApp" class="w-32 p-3 rounded-xl border text-xs font-bold">
-                        <button onclick="quickAdd('CLI')" class="bg-emerald-600 text-white px-6 rounded-xl font-black uppercase text-[10px]">Add Lead</button>
+                        <button onclick="quickAdd('CLI')" class="bg-emerald-600 text-white px-6 rounded-xl font-black uppercase text-[10px]">Add</button>
                     </div>
                 </div>
                 
-                <div class="bg-indigo-50 p-8 rounded-3xl border border-indigo-200 md:col-span-2">
-                    <h4 class="text-xs font-black text-indigo-600 uppercase mb-6 italic tracking-tighter">Business Identity & Payment Config</h4>
+                <div class="bg-indigo-50 p-8 rounded-3xl border md:col-span-2">
+                    <h4 class="text-xs font-black text-indigo-600 uppercase mb-6 italic tracking-tighter">Business Detail & Payment Info</h4>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div><p class="text-[9px] font-black mb-2 italic">COMPANY NAME</p><input id="f-biz-n" class="w-full p-3 rounded-xl border text-xs font-bold bg-white uppercase"></div>
-                        <div><p class="text-[9px] font-black mb-2 italic">ADDRESS</p><input id="f-biz-a" class="w-full p-3 rounded-xl border text-xs font-bold bg-white uppercase"></div>
-                        <div><p class="text-[9px] font-black mb-2 italic">REG NO</p><input id="f-biz-r" class="w-full p-3 rounded-xl border text-xs font-bold bg-white uppercase"></div>
+                        <input id="f-biz-n" placeholder="COMPANY NAME" class="p-3 rounded-xl border text-xs font-bold uppercase">
+                        <input id="f-biz-a" placeholder="BUSINESS ADDRESS" class="p-3 rounded-xl border text-xs font-bold uppercase">
+                        <input id="f-biz-r" placeholder="REG NO / BANK INFO" class="p-3 rounded-xl border text-xs font-bold uppercase">
                     </div>
                 </div>
 
                 <div class="bg-slate-900 p-8 rounded-3xl md:col-span-2">
-                    <h4 class="text-xs font-black text-indigo-400 uppercase mb-6 italic">Activation & Security</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div><p class="text-[9px] font-black mb-2 italic text-white">ACTIVATION START DATE</p><input id="sub-start" type="date" class="w-full p-3 rounded-xl border text-xs font-bold bg-white"></div>
-                        <div><p class="text-[9px] font-black mb-2 italic text-white">ACTIVATION KEY</p><input id="master-key" type="password" placeholder="Key..." class="w-full p-3 rounded-xl border text-xs font-bold bg-white"></div>
+                    <h4 class="text-xs font-black text-indigo-400 uppercase mb-6 italic">Activation & Security License</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div><p class="text-[9px] font-black mb-2 text-white italic">ACTIVATION DATE</p><input id="sub-start" type="date" class="w-full p-3 rounded-xl border text-xs font-bold"></div>
+                        <div><p class="text-[9px] font-black mb-2 text-white italic">SUBSCRIPTION PLAN</p><select id="sub-tier" class="w-full p-3 rounded-xl border text-xs font-bold"><option value="MONTH">MONTHLY ACCESS</option><option value="YEAR">YEARLY ACCESS</option></select></div>
+                        <div><p class="text-[9px] font-black mb-2 text-white italic">ACTIVATION KEY</p><input id="master-key" type="password" placeholder="Key..." class="w-full p-3 rounded-xl border text-xs font-bold"></div>
                     </div>
                 </div>
             </div>
-            
-            <div class="pt-10 border-t"><div class="grid grid-cols-3 gap-4 h-48 mb-6"><textarea id="raw-inv" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea><textarea id="raw-cli" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea><textarea id="raw-terms" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea></div><button onclick="saveDb()" class="w-full bg-slate-900 text-white py-5 rounded-3xl font-black uppercase italic shadow-2xl">Sync & Save All Data</button></div>
+            <button onclick="saveDb()" class="w-full bg-slate-900 text-white py-5 rounded-3xl font-black uppercase italic">Sync & Save Configuration</button>
         </div>
     </div>
 
@@ -180,17 +180,30 @@
 
         function unlockApp() { if (document.getElementById('sys-pass').value === "1234") { document.getElementById('security-lock').classList.add('hidden'); sessionStorage.setItem('chrono_auth', 'true'); } }
         
-        // --- RESTORED CORE FUNCTIONS ---
         function addRow() { 
             const row = document.createElement('tr'); 
-            row.innerHTML = `<td class="p-4"><div contenteditable="true">ITEM</div><div contenteditable="true" class="text-[10px] text-slate-400">DESCRIPTION</div></td><td class="text-center p-4" contenteditable="true" oninput="calc()">1</td><td class="text-right p-4" contenteditable="true" oninput="calc()">0.00</td><td class="text-right p-4 font-black">0.00</td><td class="no-print"><button onclick="this.parentElement.parentElement.remove(); calc()">×</button></td>`; 
+            row.innerHTML = `<td class="p-4"><div contenteditable="true">ITEM</div><div contenteditable="true" class="text-[10px] text-slate-400">DESC</div></td><td class="text-center p-4" contenteditable="true" oninput="calc()">1</td><td class="text-right p-4" contenteditable="true" oninput="calc()">0.00</td><td class="text-right p-4 font-black">0.00</td><td class="no-print"><button onclick="this.parentElement.parentElement.remove(); calc()">×</button></td>`; 
             document.getElementById('item-list').appendChild(row); 
         }
-        function calc() { let t = 0; document.querySelectorAll("#item-list tr").forEach(r => { const q = parseFloat(r.cells[1].innerText) || 0, p = parseFloat(r.cells[2].innerText) || 0; r.cells[3].innerText = (q*p).toFixed(2); t += q*p; }); document.getElementById('grand-total').innerText = t.toFixed(2); }
-        function saveToLedger(type, name = null, amt = null) { const entry = { id: Date.now(), type: type, client: name || document.getElementById('c-name').innerText, total: amt || parseFloat(document.getElementById('grand-total').innerText), date: new Date().toLocaleDateString(), status: document.getElementById('status-select').value }; history.push(entry); localStorage.setItem('chrono_history', JSON.stringify(history)); renderLedger(); alert("Saved."); }
-        function promptExpense() { const n = prompt("Expense Name:"); if(!n) return; const a = parseFloat(prompt("Amount:")); if(!isNaN(a)) saveToLedger('EXPENSE', n, a); }
 
-        // --- SIGNATURE LOGIC ---
+        function calc() { let t = 0; document.querySelectorAll("#item-list tr").forEach(r => { const q = parseFloat(r.cells[1].innerText) || 0, p = parseFloat(r.cells[2].innerText) || 0; r.cells[3].innerText = (q*p).toFixed(2); t += q*p; }); document.getElementById('grand-total').innerText = t.toFixed(2); }
+
+        function saveToLedger(type, name = null, amt = null) { 
+            const entry = { id: Date.now(), type: type, client: name || document.getElementById('c-name').innerText, total: amt || parseFloat(document.getElementById('grand-total').innerText), date: new Date().toLocaleDateString(), status: document.getElementById('status-select').value }; 
+            history.push(entry); localStorage.setItem('chrono_history', JSON.stringify(history)); renderLedger(); alert("Document Saved."); 
+        }
+
+        function promptExpense() { const n = prompt("Cost Item:"); if(n) { const a = parseFloat(prompt("Amount:")); if(!isNaN(a)) saveToLedger('EXPENSE', n, a); } }
+
+        function secureClearFinancials() {
+            if(prompt("Enter Password to Clear Today's Stats:") === "1234") {
+                const today = new Date().toLocaleDateString();
+                history = (JSON.parse(localStorage.getItem('chrono_history')) || []).filter(i => i.date !== today);
+                localStorage.setItem('chrono_history', JSON.stringify(history));
+                renderLedger(); alert("Stats cleared.");
+            }
+        }
+
         function initSignature() { 
             const start = (e) => { drawing = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); };
             const move = (e) => { if(!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); };
@@ -201,18 +214,6 @@
             ctx.lineWidth = 2; ctx.strokeStyle = '#0f172a';
         }
         function clearSig() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
-
-        // --- NEW SECURITY CLEAR ---
-        function secureClearFinancials() {
-            if(prompt("Enter System Password to Clear Today's Stats:") === "1234") {
-                const today = new Date().toLocaleDateString();
-                history = JSON.parse(localStorage.getItem('chrono_history')) || [];
-                history = history.filter(i => i.date !== today);
-                localStorage.setItem('chrono_history', JSON.stringify(history));
-                renderLedger();
-                alert("Stats for " + today + " cleared.");
-            }
-        }
 
         function updateStatus(v) { 
             document.getElementById('doc-status-badge').innerText = v; 
@@ -239,25 +240,21 @@
         }
 
         function quickAdd(type) {
-            if(type === 'INV') document.getElementById('raw-inv').value += `\n${document.getElementById('f-inv-n').value} | Description | ${document.getElementById('f-inv-s').value}`;
-            else document.getElementById('raw-cli').value += `\n${document.getElementById('f-cli-n').value} | Address | ${document.getElementById('f-cli-p').value}`;
-            alert("Added. Click Sync to apply.");
+            if(type === 'INV') localStorage.setItem('v72_inv', (localStorage.getItem('v72_inv')||'') + `\n${document.getElementById('f-inv-n').value} | Desc | ${document.getElementById('f-inv-s').value}`);
+            else localStorage.setItem('v72_cli', (localStorage.getItem('v72_cli')||'') + `\n${document.getElementById('f-cli-n').value} | Addr | ${document.getElementById('f-cli-p').value}`);
+            alert("Added. Save to Sync.");
         }
 
         function syncData() { 
-            const rInv = localStorage.getItem('v72_inv') || "", rCli = localStorage.getItem('v72_cli') || ""; 
-            document.getElementById('raw-inv').value = rInv; document.getElementById('raw-cli').value = rCli;
             const biz = JSON.parse(localStorage.getItem('chrono_identity')) || {n:'', a:'', r:''};
             document.getElementById('f-biz-n').value = biz.n; document.getElementById('f-biz-a').value = biz.a; document.getElementById('f-biz-r').value = biz.r;
             document.getElementById('set-comp-name').innerText = biz.n || "YOUR BUSINESS"; document.getElementById('set-comp-addr').innerText = biz.a; document.getElementById('set-comp-reg').innerText = "REG: " + biz.r;
-            clients = rCli.split('\n').filter(l => l.includes('|')).map(l => { const p = l.split('|'); return { n: p[0].trim(), ph: p[2].trim(), a: p[1].trim() }; }); 
-            document.getElementById('client-dropdown').innerHTML = '<option value="">Lead...</option>' + clients.map((c, i) => `<option value="${i}">${c.n}</option>`).join(''); 
+            clients = (localStorage.getItem('v72_cli') || "").split('\n').filter(l => l.includes('|')).map(l => { const p = l.split('|'); return { n: p[0].trim(), ph: p[2].trim() }; }); 
+            document.getElementById('client-dropdown').innerHTML = '<option value="">Select Lead...</option>' + clients.map((c, i) => `<option value="${i}">${c.n}</option>`).join(''); 
             renderLedger();
         }
 
         function saveDb() { 
-            localStorage.setItem('v72_inv', document.getElementById('raw-inv').value); 
-            localStorage.setItem('v72_cli', document.getElementById('raw-cli').value);
             localStorage.setItem('chrono_identity', JSON.stringify({ n: document.getElementById('f-biz-n').value, a: document.getElementById('f-biz-a').value, r: document.getElementById('f-biz-r').value }));
             localStorage.setItem('sub_start', document.getElementById('sub-start').value);
             localStorage.setItem('chrono_key', document.getElementById('master-key').value);
@@ -269,7 +266,6 @@
         function toggleBlast() { document.getElementById('blast-modal').classList.toggle('hidden'); if(!document.getElementById('blast-modal').classList.contains('hidden')) renderBlastList(); }
         function renderBlastList() { document.getElementById('blast-list').innerHTML = clients.map((c, i) => `<div class="p-4 bg-slate-50 rounded-2xl flex justify-between items-center border mb-2"><div><p class="text-[10px] font-black uppercase">${c.n}</p></div><span id="status-${i}" class="text-[8px] font-black px-4 py-2 rounded-xl bg-slate-200 text-slate-400 uppercase">Queued</span></div>`).join(''); }
         function toggleDb() { document.getElementById('db-modal').classList.toggle('hidden'); }
-        function toggleReport() { alert("Report logic active."); }
         function generatePDF() { html2pdf().from(document.getElementById('document-content')).save(); }
         window.onload = () => { if (sessionStorage.getItem('chrono_auth') === 'true') document.getElementById('security-lock').classList.add('hidden'); syncData(); initSignature(); };
     </script>
