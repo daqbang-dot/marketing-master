@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketing Master Tool | V8.2.0</title>
+    <title>Marketing Master Tool | V8.4.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -26,21 +26,6 @@
 </head>
 <body>
 
-    <div id="sub-lock" class="hidden fixed inset-0 bg-slate-950 z-[2000] flex flex-col items-center justify-center p-6 text-center">
-        <h2 class="text-indigo-400 font-black text-4xl mb-2 uppercase italic">Access Suspended</h2>
-        <p class="text-slate-400 text-sm mb-8 uppercase font-bold tracking-widest">Subscription expired. Please renew to continue.</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
-            <div class="bg-slate-900 border border-indigo-500/30 p-8 rounded-[2rem]">
-                <h3 class="text-white font-black text-xl mb-1">MONTHLY PASS</h3>
-                <button onclick="pay('MONTH')" class="w-full py-4 bg-indigo-600 text-white rounded-xl font-black uppercase text-xs">ToyyibPay Monthly</button>
-            </div>
-            <div class="bg-slate-900 border border-emerald-500/30 p-8 rounded-[2rem]">
-                <h3 class="text-white font-black text-xl mb-1">ANNUAL PASS</h3>
-                <button onclick="pay('YEAR')" class="w-full py-4 bg-emerald-600 text-white rounded-xl font-black uppercase text-xs">ToyyibPay Yearly</button>
-            </div>
-        </div>
-    </div>
-
     <div id="security-lock" class="fixed inset-0 bg-slate-950 z-[1000] flex flex-col items-center justify-center p-6 transition-all duration-500">
         <h2 class="text-white font-black text-xl mb-4 uppercase italic">Chrono System Locked</h2>
         <input type="password" id="sys-pass" placeholder="••••" class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-center text-white font-black tracking-[1em] outline-none mb-4 w-64 focus:ring-2 ring-indigo-500">
@@ -52,19 +37,22 @@
             <span class="text-3xl">🚀</span>
             <div>
                 <h1 class="text-lg font-black italic text-white uppercase tracking-tighter leading-none">Marketing Master</h1>
-                <p class="text-[9px] font-bold text-indigo-400 uppercase tracking-widest mt-1">Chrono System v8.2.0</p>
+                <p class="text-[9px] font-bold text-indigo-400 uppercase tracking-widest mt-1">v8.4.0</p>
             </div>
         </div>
 
         <div class="bg-slate-900/80 p-5 rounded-3xl border border-white/5 mb-6">
-            <label class="text-[9px] font-black text-indigo-400 uppercase tracking-widest italic mb-4 block text-center border-b border-white/5 pb-2">Financial Intel</label>
+            <div class="flex justify-between items-center border-b border-white/5 pb-2 mb-4">
+                <label class="text-[9px] font-black text-indigo-400 uppercase tracking-widest italic">Financial Intel</label>
+                <button onclick="secureClearFinancials()" class="text-[8px] font-black text-red-500 uppercase hover:underline">Clear Today 🗑️</button>
+            </div>
             <div class="grid grid-cols-2 gap-4">
                 <div><p class="text-[8px] font-bold text-slate-500 uppercase">Revenue</p><p id="stat-revenue" class="text-xs font-black text-emerald-400">RM 0.00</p></div>
                 <div class="text-right"><p class="text-[8px] font-bold text-slate-500 uppercase">Expenses</p><p id="stat-expense" class="text-xs font-black text-red-400">RM 0.00</p></div>
             </div>
             <div class="mt-4 pt-4 border-t border-white/5 flex justify-between items-end">
                 <div><p class="text-[8px] font-bold text-slate-500 uppercase">Net Profit</p><p id="stat-profit" class="text-xl font-black text-white italic">RM 0.00</p></div>
-                <button onclick="toggleReport()" class="bg-indigo-600 p-2 rounded-lg text-[9px] font-black uppercase">Reports 📊</button>
+                <button onclick="toggleReport()" class="bg-indigo-600 p-2 rounded-lg text-[9px] font-black uppercase">Reports</button>
             </div>
         </div>
 
@@ -77,7 +65,7 @@
                 <option value="PAID">Receipt</option>
             </select>
             <select id="client-dropdown" onchange="applyClient(this.value)" class="w-full bg-slate-800 rounded-xl p-4 text-xs font-bold text-indigo-300 outline-none border border-indigo-500/20"></select>
-            <button onclick="toggleCanvas()" class="w-full py-3 bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 rounded-xl font-black text-[10px] uppercase">Toggle Workspace</button>
+            <button onclick="toggleWorkspace()" class="w-full py-3 bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 rounded-xl font-black text-[10px] uppercase">Toggle Workspace</button>
             <button onclick="addRow()" class="w-full py-4 bg-indigo-600 text-white rounded-xl font-black text-[10px] uppercase">＋ Add Line Item</button>
             <div class="flex gap-2">
                 <button onclick="saveToLedger('INCOME')" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-black text-[10px] uppercase">Save Doc</button>
@@ -85,14 +73,9 @@
             </div>
         </div>
 
-        <div class="mb-6">
-            <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest px-1 italic">Chrono Ledger</label>
-            <div id="ledger-list" class="mt-4 space-y-2 max-h-64 overflow-y-auto custom-scroll"></div>
-        </div>
-
         <div class="space-y-2 mb-6">
             <button onclick="toggleBlast()" class="w-full py-4 bg-green-600 text-white rounded-xl font-black text-[10px] uppercase italic">WhatsApp Auto-Pilot</button>
-            <div class="flex gap-2 mt-4">
+            <div class="flex gap-2">
                 <button onclick="toggleDb()" class="flex-1 py-4 bg-slate-800 text-slate-400 rounded-xl text-[10px] font-black uppercase">DB ⚙️</button>
                 <button onclick="generatePDF()" class="flex-[2] py-4 bg-white text-slate-900 rounded-xl font-black text-[10px] uppercase">PDF</button>
             </div>
@@ -106,13 +89,11 @@
                 <div class="w-1/3 text-right">
                     <p class="data-label">Provider</p><h3 id="set-comp-name" class="font-black text-xl text-slate-900 uppercase italic">YOUR BUSINESS</h3>
                     <p id="set-comp-addr" class="text-[10px] text-slate-500 font-bold mt-4 uppercase"></p>
-                    <p id="set-comp-reg" class="text-indigo-600 font-black text-[10px] uppercase"></p>
                 </div>
             </header>
             <div class="flex border-t border-slate-100 pt-10 mb-16 uppercase">
                 <div class="w-1/2">
                     <p class="data-label">Recipient</p><p id="c-name" contenteditable="true" class="text-4xl font-black text-slate-900 italic">CLIENT NAME</p>
-                    <p id="c-addr" contenteditable="true" class="text-[11px] text-slate-400 mt-4 font-bold">ADDRESS INFO</p>
                 </div>
                 <div class="w-1/2 text-right">
                     <p class="data-label">Reference</p><p id="doc-id" contenteditable="true" class="text-slate-900 font-black text-lg">REF-1001</p>
@@ -120,27 +101,22 @@
                 </div>
             </div>
             <table class="w-full mb-20">
-                <thead class="border-b-2 border-slate-900 text-[10px] font-black uppercase"><tr><th class="text-left p-4">Description</th><th class="text-center p-4">Qty</th><th class="text-right p-4">Rate</th><th class="text-right p-4">Total</th><th class="no-print w-10"></th></tr></thead>
+                <thead class="border-b-2 border-slate-900 text-[10px] font-black uppercase"><tr><th class="text-left p-4">Description</th><th class="text-center p-4">Qty</th><th class="text-right p-4">Rate</th><th class="text-right p-4">Total</th></tr></thead>
                 <tbody id="item-list" class="text-slate-900 font-bold uppercase text-xs"></tbody>
             </table>
             <div class="mt-auto flex justify-between items-end border-t border-slate-100 pt-12">
                 <div class="w-1/2">
-                    <div class="bg-slate-50 p-6 rounded-2xl border mb-6 relative">
-                        <p class="data-label">Payments</p><p id="bank-details" contenteditable="true" oninput="saveBankDetails()" class="text-[10px] font-black italic">BANK INFO</p>
-                    </div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border mb-6"><p class="data-label">Payments</p><p id="bank-details" contenteditable="true" class="text-[10px] font-black italic">BANK INFO</p></div>
                     <div><p class="data-label">Authorized Signature</p><canvas id="sig-canvas" width="250" height="80"></canvas></div>
                 </div>
-                <div class="text-right flex flex-col items-end gap-8">
-                    <div class="stamp-box"><span id="stamp-text">STAMP</span><img id="stamp-img" src="" class="hidden"></div>
-                    <div class="bg-slate-900 text-white p-10 min-w-[280px] shadow-2xl"><p class="data-label text-indigo-400">Total Investment (RM)</p><p id="grand-total" class="text-6xl font-black italic">0.00</p></div>
-                </div>
+                <div class="text-right"><div class="bg-slate-900 text-white p-10 min-w-[280px] shadow-2xl"><p class="data-label text-indigo-400">Total Investment (RM)</p><p id="grand-total" class="text-6xl font-black italic">0.00</p></div></div>
             </div>
         </div>
     </main>
 
     <div id="blast-modal" class="hidden fixed inset-0 bg-slate-900/95 z-[950] flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white rounded-[3rem] p-10 w-full max-w-6xl shadow-2xl overflow-y-auto max-h-[90vh]">
-            <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic tracking-tighter">Auto-Pilot <span class="text-green-500">v8.2.0</span></h3><button onclick="toggleBlast()" class="text-3xl font-black">×</button></div>
+            <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic tracking-tighter">Auto-Pilot <span class="text-green-500">v8.4.0</span></h3><button onclick="toggleBlast()" class="text-3xl font-black">×</button></div>
             <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
                 <div class="md:col-span-4 space-y-6">
                     <div class="bg-slate-50 p-6 rounded-[2rem] border">
@@ -154,7 +130,7 @@
                     </div>
                     <div class="bg-indigo-900 p-6 rounded-[2rem] text-white">
                         <p class="text-[9px] font-black uppercase text-indigo-300 mb-2">Automation Feed</p>
-                        <div id="live-preview-box" class="bg-white/10 p-4 rounded-xl text-xs italic break-words min-h-[100px]">Ready...</div>
+                        <div id="live-preview-box" class="bg-white/10 p-4 rounded-xl text-xs italic min-h-[100px]">Ready...</div>
                     </div>
                 </div>
                 <div class="md:col-span-8">
@@ -166,19 +142,29 @@
     </div>
 
     <div id="db-modal" class="hidden fixed inset-0 bg-slate-950/95 z-[900] flex items-center justify-center p-6 text-slate-900">
-        <div class="bg-white rounded-[3rem] p-10 w-full max-w-5xl shadow-2xl">
-            <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic">Database Hub</h3><button onclick="toggleDb()" class="text-3xl font-black">×</button></div>
-            <div class="grid grid-cols-3 gap-4 h-64 mb-6">
-                <textarea id="raw-inv" placeholder="Inventory Data" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea>
-                <textarea id="raw-cli" placeholder="Client Data" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea>
-                <textarea id="raw-terms" placeholder="Terms" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea>
+        <div class="bg-white rounded-[3rem] p-10 w-full max-w-6xl shadow-2xl overflow-y-auto max-h-[95vh]">
+            <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic tracking-tighter">Database Hub</h3><button onclick="toggleDb()" class="text-3xl font-black">×</button></div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
+                <div class="bg-slate-50 p-6 rounded-3xl border">
+                    <h4 class="text-[10px] font-black text-indigo-600 uppercase mb-4 tracking-widest italic">Easy Inventory Entry</h4>
+                    <div class="flex gap-2">
+                        <input id="f-inv-n" placeholder="Item Name" class="flex-1 p-3 rounded-xl border text-xs font-bold uppercase">
+                        <input id="f-inv-s" placeholder="Price" class="w-24 p-3 rounded-xl border text-xs font-bold">
+                        <button onclick="quickAdd('INV')" class="bg-indigo-600 text-white px-6 rounded-xl font-black uppercase text-[10px]">Add Item</button>
+                    </div>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-3xl border">
+                    <h4 class="text-[10px] font-black text-emerald-600 uppercase mb-4 tracking-widest italic">Easy Client Lead Entry</h4>
+                    <div class="flex gap-2">
+                        <input id="f-cli-n" placeholder="Name" class="flex-1 p-3 rounded-xl border text-xs font-bold uppercase">
+                        <input id="f-cli-p" placeholder="WhatsApp" class="w-32 p-3 rounded-xl border text-xs font-bold">
+                        <button onclick="quickAdd('CLI')" class="bg-emerald-600 text-white px-6 rounded-xl font-black uppercase text-[10px]">Add Lead</button>
+                    </div>
+                </div>
             </div>
-            <div class="bg-indigo-50 p-6 rounded-3xl mb-6 grid grid-cols-3 gap-4">
-                <input id="sub-start" type="date" class="p-3 rounded-xl border text-xs font-bold">
-                <select id="sub-tier" class="p-3 rounded-xl border text-xs font-bold"><option value="MONTH">Monthly</option><option value="YEAR">Yearly</option></select>
-                <input id="master-key" type="password" placeholder="Master Key" class="p-3 rounded-xl border text-xs font-bold">
-            </div>
-            <button onclick="saveDb()" class="w-full bg-slate-900 text-white py-5 rounded-3xl font-black uppercase">Sync Data</button>
+
+            <div class="pt-10 border-t"><div class="grid grid-cols-3 gap-4 h-48 mb-6"><textarea id="raw-inv" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea><textarea id="raw-cli" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea><textarea id="raw-terms" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea></div><button onclick="saveDb()" class="w-full bg-slate-900 text-white py-5 rounded-3xl font-black uppercase">Sync All Data</button></div>
         </div>
     </div>
 
@@ -186,29 +172,31 @@
         let inventory = []; let clients = []; let history = []; let isAuto = false; let queueIdx = 0;
         const canvas = document.getElementById('sig-canvas'); const ctx = canvas.getContext('2d');
 
-        // --- FIXED FUNCTIONS ---
-        function toggleCanvas() { 
-            const doc = document.getElementById('document-content');
-            doc.classList.toggle('hidden-canvas');
+        function unlockApp() { if (document.getElementById('sys-pass').value === "1234") { document.getElementById('security-lock').classList.add('hidden'); sessionStorage.setItem('chrono_auth', 'true'); } }
+        
+        function secureClearFinancials() {
+            const pass = prompt("Enter Password to Clear Today's Financials:");
+            if (pass === "1234") {
+                const today = new Date().toLocaleDateString();
+                history = JSON.parse(localStorage.getItem('chrono_history')) || [];
+                history = history.filter(item => item.date !== today);
+                localStorage.setItem('chrono_history', JSON.stringify(history));
+                renderLedger();
+                alert("Financials for " + today + " cleared.");
+            } else { alert("Unauthorized."); }
         }
+
+        function toggleWorkspace() { document.getElementById('document-content').classList.toggle('hidden-canvas'); }
 
         function updateStatus(v) { 
             document.getElementById('doc-status-badge').innerText = v; 
             document.getElementById('doc-status-badge').className = `status-badge status-${v}`; 
-            // INVOICE FIX: Now correctly shows TAX INVOICE
-            document.getElementById('dynamic-title').innerText = v === 'PAID' ? 'OFFICIAL RECEIPT' : (v === 'OVERDUE' ? 'TAX INVOICE' : 'QUOTATION'); 
+            // V8.4.0 FIX: changed from TAX INVOICE to INVOICE
+            document.getElementById('dynamic-title').innerText = v === 'PAID' ? 'OFFICIAL RECEIPT' : (v === 'OVERDUE' ? 'INVOICE' : 'QUOTATION'); 
         }
 
-        // --- NEW AUTO-PILOT v8.2.0 ENGINE ---
         function toggleBlast() { document.getElementById('blast-modal').classList.toggle('hidden'); if(!document.getElementById('blast-modal').classList.contains('hidden')) renderBlastList(); }
-        
-        function renderBlastList() { 
-            document.getElementById('blast-list').innerHTML = clients.map((c, i) => `
-                <div class="p-4 bg-slate-50 rounded-2xl flex justify-between items-center border border-slate-100 mb-2">
-                    <div><p class="text-[10px] font-black uppercase">${c.n}</p><p class="text-[8px] font-bold text-slate-400">${c.ph}</p></div>
-                    <span id="status-${i}" class="text-[8px] font-black px-4 py-2 rounded-xl bg-slate-200 text-slate-400 uppercase">Standby</span>
-                </div>`).join(''); 
-        }
+        function renderBlastList() { document.getElementById('blast-list').innerHTML = clients.map((c, i) => `<div class="p-4 bg-slate-50 rounded-2xl flex justify-between items-center border mb-2"><div><p class="text-[10px] font-black uppercase">${c.n}</p><p class="text-[8px] font-bold text-slate-400">${c.ph}</p></div><span id="status-${i}" class="text-[8px] font-black px-4 py-2 rounded-xl bg-slate-200 text-slate-400 uppercase">Queued</span></div>`).join(''); }
 
         function startAutoPilot() {
             if(isAuto) { isAuto = false; document.getElementById('auto-pilot-btn').innerText = "One-Click Auto Blast"; return; }
@@ -219,46 +207,44 @@
         }
 
         async function runQueue() {
-            if(!isAuto || queueIdx >= clients.length) { 
-                isAuto = false; 
-                document.getElementById('auto-pilot-btn').innerText = "One-Click Auto Blast";
-                return; 
-            }
-            
+            if(!isAuto || queueIdx >= clients.length) { isAuto = false; document.getElementById('auto-pilot-btn').innerText = "One-Click Auto Blast"; return; }
             const c = clients[queueIdx];
             const delay = parseInt(document.getElementById('blast-delay').value) * 1000;
             const media = document.getElementById('blast-media').value;
             const total = document.getElementById('grand-total').innerText;
-            
-            let msg = document.getElementById('blast-msg').value
-                .replace(/\[Name\]/g, c.n)
-                .replace(/\[Total\]/g, total);
-            
-            if(media) msg += `\n\nView Media: ${media}`;
-
-            // Automation Trigger
+            let msg = document.getElementById('blast-msg').value.replace(/\[Name\]/g, c.n).replace(/\[Total\]/g, total);
+            if(media) msg += `\n\nMedia: ${media}`;
             window.open(`https://wa.me/${c.ph.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
-            
-            document.getElementById(`status-${queueIdx}`).innerText = "TRANSMITTED";
+            document.getElementById(`status-${queueIdx}`).innerText = "SENT";
             document.getElementById(`status-${queueIdx}`).className = "text-[8px] font-black px-4 py-2 rounded-xl bg-green-100 text-green-600 uppercase";
             document.getElementById('live-preview-box').innerText = `Sent to ${c.n}. Waiting ${delay/1000}s...`;
-            
             queueIdx++;
             setTimeout(runQueue, delay);
         }
 
-        // --- PRESERVED CORE (UNTOUCHED) ---
-        function unlockApp() { if (document.getElementById('sys-pass').value === "1234") { document.getElementById('security-lock').classList.add('hidden'); sessionStorage.setItem('chrono_auth', 'true'); } }
+        function quickAdd(type) {
+            if(type === 'INV') {
+                const line = `${document.getElementById('f-inv-n').value} | Easy Item | ${document.getElementById('f-inv-s').value}`;
+                document.getElementById('raw-inv').value += (document.getElementById('raw-inv').value ? "\n" : "") + line;
+            } else {
+                const line = `${document.getElementById('f-cli-n').value} | Address | ${document.getElementById('f-cli-p').value}`;
+                document.getElementById('raw-cli').value += (document.getElementById('raw-cli').value ? "\n" : "") + line;
+            }
+            alert("Added to database. Click 'Sync All Data' to apply.");
+        }
+
         function syncData() { 
             const rInv = localStorage.getItem('v72_inv') || "", rCli = localStorage.getItem('v72_cli') || ""; 
             document.getElementById('raw-inv').value = rInv; document.getElementById('raw-cli').value = rCli;
             clients = rCli.split('\n').filter(l => l.includes('|')).map(l => { const p = l.split('|'); return { n: p[0].trim(), ph: p[2].trim(), a: p[1].trim() }; }); 
             document.getElementById('client-dropdown').innerHTML = '<option value="">Lead...</option>' + clients.map((c, i) => `<option value="${i}">${c.n}</option>`).join(''); 
+            renderLedger();
         }
         function saveDb() { localStorage.setItem('v72_inv', document.getElementById('raw-inv').value); localStorage.setItem('v72_cli', document.getElementById('raw-cli').value); syncData(); toggleDb(); }
         function toggleDb() { document.getElementById('db-modal').classList.toggle('hidden'); }
+        function saveToLedger(type) { const entry = { id: Date.now(), type: type, total: parseFloat(document.getElementById('grand-total').innerText) || 0, date: new Date().toLocaleDateString() }; history.push(entry); localStorage.setItem('chrono_history', JSON.stringify(history)); renderLedger(); }
+        function renderLedger() { history = JSON.parse(localStorage.getItem('chrono_history')) || []; let rev = 0, exp = 0; history.forEach(item => { if(item.type === 'INCOME') rev += item.total; else exp += item.total; }); document.getElementById('stat-revenue').innerText = `RM ${rev.toFixed(2)}`; document.getElementById('stat-expense').innerText = `RM ${exp.toFixed(2)}`; document.getElementById('stat-profit').innerText = `RM ${(rev - exp).toFixed(2)}`; }
         window.onload = () => { if (sessionStorage.getItem('chrono_auth') === 'true') document.getElementById('security-lock').classList.add('hidden'); syncData(); };
-        function addRow() { const row = document.createElement('tr'); row.innerHTML = `<td class="p-4"><div contenteditable="true">ITEM</div></td><td class="text-center p-4" contenteditable="true">1</td><td class="text-right p-4" contenteditable="true">0.00</td><td class="text-right p-4 font-black">0.00</td>`; document.getElementById('item-list').appendChild(row); }
     </script>
 </body>
 </html>
