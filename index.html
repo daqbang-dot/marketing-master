@@ -3,65 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketing Master Tool | V9.0.0</title>
+    <title>Marketing Master Pro | V9.2.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Space Grotesk', sans-serif; background: #020617; color: #f8fafc; overflow: hidden; display: flex; height: 100vh; }
-        .sidebar { background: #0f172a; border-right: 1px solid #1e293b; width: 360px; flex-shrink: 0; display: flex; flex-direction: column; padding: 1.5rem; overflow-y: auto; z-index: 50; }
-        .main-canvas { flex: 1; background: radial-gradient(circle at center, #0f172a 0%, #020617 100%); overflow-y: auto; display: flex; justify-content: center; align-items: flex-start; padding: 5rem 2rem; transition: all 0.5s ease; }
-        .glass-paper { background: #ffffff; color: #0f172a; width: 210mm; min-height: 297mm; padding: 80px; box-shadow: 0 60px 120px -20px rgba(0, 0, 0, 0.8); position: relative; border-left: 20px solid #64748b; }
-        .hidden-canvas { opacity: 0; transform: scale(0.98) translateY(20px); pointer-events: none; position: absolute; }
-        .status-badge { padding: 4px 15px; border-radius: 99px; color: white; font-size: 10px; font-weight: 900; text-transform: uppercase; }
+        .sidebar { background: #0f172a; border-right: 1px solid #1e293b; width: 380px; flex-shrink: 0; display: flex; flex-direction: column; padding: 1.5rem; overflow-y: auto; z-index: 50; }
+        .main-canvas { flex: 1; background: radial-gradient(circle at center, #0f172a 0%, #020617 100%); overflow-y: auto; display: flex; justify-content: center; padding: 4rem 2rem; }
+        .glass-paper { background: #ffffff; color: #0f172a; width: 210mm; min-height: 297mm; padding: 80px; box-shadow: 0 50px 100px rgba(0,0,0,0.5); position: relative; border-left: 15px solid #1e293b; }
+        .status-badge { padding: 4px 12px; border-radius: 99px; color: white; font-size: 10px; font-weight: 900; text-transform: uppercase; }
         .status-DRAFT { background: #64748b; } .status-PAID { background: #10b981; } .status-PENDING { background: #3b82f6; } .status-OVERDUE { background: #ef4444; }
-        #sig-canvas { border-bottom: 2px solid #0f172a; cursor: crosshair; background: #fdfdfd; touch-action: none; }
-        .exclusive-title { font-size: 70px; font-weight: 900; line-height: 0.8; letter-spacing: -0.05em; color: #0f172a; font-style: italic; text-transform: uppercase; }
-        .data-label { font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; color: #94a3b8; margin-bottom: 4px; }
-        .renew-warning { background: #ef4444; color: white; padding: 10px; border-radius: 12px; font-size: 10px; font-weight: 900; text-align: center; margin-bottom: 1rem; display: none; }
-        .custom-scroll::-webkit-scrollbar { width: 4px; } .custom-scroll::-webkit-scrollbar-thumb { background: #312e81; border-radius: 10px; }
+        #sig-canvas { border-bottom: 2px solid #0f172a; cursor: crosshair; background: #fafafa; }
+        .exclusive-title { font-size: 60px; font-weight: 900; line-height: 0.9; letter-spacing: -0.05em; color: #0f172a; font-style: italic; text-transform: uppercase; }
+        .data-label { font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; }
+        .custom-scroll::-webkit-scrollbar { width: 4px; } .custom-scroll::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 10px; }
+        .renew-warning { background: #ef4444; color: white; padding: 8px; border-radius: 8px; font-size: 10px; font-weight: 900; text-align: center; margin-bottom: 10px; display: none; }
     </style>
 </head>
 <body>
 
-    <div id="security-lock" class="fixed inset-0 bg-slate-950 z-[1000] flex flex-col items-center justify-center p-6">
-        <h2 class="text-white font-black text-xl mb-4 uppercase italic">Chrono System Locked</h2>
-        <input type="password" id="sys-pass" placeholder="••••" class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-center text-white font-black tracking-[1em] outline-none mb-4 w-64">
-        <button onclick="unlockApp()" class="bg-indigo-600 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase shadow-xl">Access Hub</button>
+    <div id="security-lock" class="fixed inset-0 bg-slate-950 z-[2000] flex flex-col items-center justify-center p-6">
+        <h2 class="text-white font-black text-xl mb-4 uppercase italic tracking-widest">System Encrypted</h2>
+        <input type="password" id="sys-pass" placeholder="PASSWORD" class="bg-slate-900 border border-slate-700 rounded-2xl p-4 text-center text-white font-black tracking-[1em] outline-none mb-4 w-64 focus:ring-2 ring-indigo-500">
+        <button onclick="unlockApp()" class="bg-indigo-600 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase shadow-2xl hover:bg-indigo-500">Decrypt Hub</button>
     </div>
 
     <aside class="sidebar custom-scroll no-print">
         <div class="flex items-center gap-3 mb-6">
-            <span class="text-3xl">🚀</span>
-            <div><h1 class="text-lg font-black italic text-white uppercase tracking-tighter leading-none">Marketing Master</h1><p class="text-[9px] font-bold text-indigo-400 uppercase tracking-widest mt-1">v9.0.0</p></div>
+            <span class="text-3xl">🛡️</span>
+            <div><h1 class="text-lg font-black italic text-white leading-none">MASTER TOOL</h1><p class="text-[9px] font-bold text-indigo-400 uppercase mt-1">Version 9.2.0</p></div>
         </div>
 
-        <div id="renew-badge" class="renew-warning">⚠️ SUBSCRIPTION NEAR EXPIRY - RENEW NOW</div>
+        <div id="renew-badge" class="renew-warning">⚠️ SUBSCRIPTION EXPIRES SOON</div>
 
         <div class="bg-slate-900/80 p-5 rounded-3xl border border-white/5 mb-6">
-            <div class="flex justify-between items-center border-b border-white/5 pb-2 mb-4">
-                <label class="text-[9px] font-black text-indigo-400 uppercase tracking-widest italic">Financial Intel</label>
-                <button onclick="secureClearToday()" class="text-[8px] font-black text-red-500 uppercase">Clear Today 🗑️</button>
+            <div class="flex justify-between items-center mb-4">
+                <label class="text-[10px] font-black text-indigo-400 uppercase italic">Financial Intel</label>
+                <button onclick="secureClearToday()" class="text-[8px] font-black text-red-500 underline">Clear Today 🗑️</button>
             </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div><p class="text-[8px] font-bold text-slate-500 uppercase">Revenue</p><p id="stat-revenue" class="text-xs font-black text-emerald-400">RM 0.00</p></div>
-                <div class="text-right"><p class="text-[8px] font-bold text-slate-500 uppercase">Expenses</p><p id="stat-expense" class="text-xs font-black text-red-400">RM 0.00</p></div>
+            <div class="grid grid-cols-2 gap-2 mb-4">
+                <div><p class="text-[8px] text-slate-500 uppercase">Revenue</p><p id="stat-revenue" class="text-xs font-black text-emerald-400">RM 0.00</p></div>
+                <div class="text-right"><p class="text-[8px] text-slate-500 uppercase">Expenses</p><p id="stat-expense" class="text-xs font-black text-red-400">RM 0.00</p></div>
             </div>
-            <div class="mt-4 pt-4 border-t border-white/5 flex justify-between items-center">
-                <div><p class="text-[8px] font-bold text-slate-500 uppercase">Net Profit</p><p id="stat-profit" class="text-xl font-black text-white italic">RM 0.00</p></div>
+            <div class="pt-3 border-t border-white/5 flex justify-between items-center">
+                <div><p class="text-[8px] text-slate-500 uppercase">Net Profit</p><p id="stat-profit" class="text-lg font-black text-white italic">RM 0.00</p></div>
                 <button onclick="toggleReport()" class="bg-indigo-600 px-3 py-2 rounded-lg text-[8px] font-black uppercase">Reports</button>
             </div>
         </div>
 
         <div class="space-y-3 mb-6">
-            <label class="text-[9px] font-black text-amber-400 uppercase tracking-widest px-1 italic">Document Builder</label>
+            <label class="text-[9px] font-black text-amber-400 uppercase px-1 italic">Builder & Sync</label>
             <select id="status-select" onchange="updateSyncStatus(this.value)" class="w-full bg-slate-800 rounded-xl p-4 text-xs font-black uppercase text-white border border-slate-700">
                 <option value="DRAFT">Draft Mode</option>
                 <option value="PENDING">Quotation</option>
                 <option value="OVERDUE">Invoice</option>
-                <option value="PAID">Receipt</option>
+                <option value="PAID">Official Receipt</option>
             </select>
-            <select id="client-dropdown" onchange="applySyncClient(this.value)" class="w-full bg-slate-800 rounded-xl p-4 text-xs font-bold text-indigo-300 border border-indigo-500/20"></select>
+            <select id="client-dropdown" onchange="applySyncClient(this.value)" class="w-full bg-slate-800 rounded-xl p-4 text-xs font-bold text-indigo-300 border border-indigo-500/20">
+                <option value="">Select Client Database...</option>
+            </select>
             <button onclick="addRow()" class="w-full py-4 bg-indigo-600 text-white rounded-xl font-black text-[10px] uppercase italic">＋ Add Line Item</button>
             <div class="flex gap-2">
                 <button onclick="saveToLedger('INCOME')" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-black text-[10px] uppercase italic">Save Doc</button>
@@ -72,14 +73,14 @@
         <div class="space-y-2 mb-6">
             <button onclick="toggleBlast()" class="w-full py-4 bg-green-600 text-white rounded-xl font-black text-[10px] uppercase italic">WhatsApp Auto-Pilot</button>
             <div class="flex gap-2">
-                <button onclick="toggleDb()" class="flex-1 py-4 bg-slate-800 text-slate-400 rounded-xl text-[10px] font-black uppercase italic">Settings ⚙️</button>
-                <button onclick="generatePDF()" class="flex-[2] py-4 bg-white text-slate-900 rounded-xl font-black text-[10px] uppercase italic">Export PDF</button>
+                <button onclick="toggleDb()" class="flex-1 py-4 bg-slate-800 text-slate-400 rounded-xl text-[10px] font-black uppercase">Settings ⚙️</button>
+                <button onclick="generatePDF()" class="flex-[2] py-4 bg-white text-slate-900 rounded-xl font-black text-[10px] uppercase">Export PDF</button>
             </div>
         </div>
 
-        <div class="mt-auto p-4 bg-indigo-950/30 rounded-2xl border border-indigo-500/20">
-            <p class="text-[8px] font-black text-indigo-400 uppercase mb-2 italic">Support Info</p>
-            <p id="support-info-text" class="text-[10px] text-white font-bold italic leading-tight">Help Center: support@chrono.com</p>
+        <div class="mt-auto p-4 bg-slate-900 rounded-2xl border border-white/5">
+            <p class="text-[8px] font-black text-indigo-400 uppercase italic mb-1">Support Info</p>
+            <p class="text-[9px] text-slate-400 font-bold">Email: support@mastertool.pro<br>WhatsApp: +601-MASTER-SYNC</p>
         </div>
     </aside>
 
@@ -88,18 +89,18 @@
             <header class="flex justify-between items-start mb-20">
                 <div class="w-2/3"><h2 id="dynamic-title" class="exclusive-title mb-4">QUOTATION</h2><span id="doc-status-badge" class="status-badge status-DRAFT">DRAFT</span></div>
                 <div class="w-1/3 text-right">
-                    <p class="data-label">Provider</p><h3 id="set-comp-name" class="font-black text-xl text-slate-900 uppercase italic">YOUR BUSINESS</h3>
+                    <p class="data-label">Provider</p><h3 id="set-comp-name" class="font-black text-xl text-slate-900 uppercase italic">BUSINESS NAME</h3>
                     <p id="set-comp-addr" class="text-[10px] text-slate-500 font-bold mt-4 uppercase"></p>
-                    <p id="set-comp-reg" class="text-indigo-600 font-black text-[10px] uppercase"></p>
+                    <p id="set-comp-reg" class="text-indigo-600 font-black text-[9px] uppercase mt-1"></p>
                 </div>
             </header>
             <div class="flex border-t border-slate-100 pt-10 mb-16 uppercase">
                 <div class="w-1/2">
                     <p class="data-label">Recipient</p><p id="c-name" contenteditable="true" class="text-4xl font-black text-slate-900 italic">CLIENT NAME</p>
-                    <p id="c-addr" contenteditable="true" class="text-[11px] text-slate-400 mt-4 font-bold">ADDRESS INFO</p>
+                    <p id="c-addr" contenteditable="true" class="text-[11px] text-slate-400 mt-4 font-bold">CLIENT ADDRESS</p>
                 </div>
                 <div class="w-1/2 text-right">
-                    <p class="data-label">Reference</p><p id="doc-id" contenteditable="true" class="text-slate-900 font-black text-lg">REF-1001</p>
+                    <p class="data-label">Reference</p><p id="doc-id" contenteditable="true" class="text-slate-900 font-black text-lg">REF-9001</p>
                     <p id="doc-date" class="text-[10px] font-bold text-slate-400 mt-2">FEBRUARY 02, 2026</p>
                 </div>
             </div>
@@ -109,55 +110,84 @@
             </table>
             <div class="mt-auto flex justify-between items-end border-t border-slate-100 pt-12">
                 <div class="w-1/2">
-                    <div class="bg-slate-50 p-6 rounded-2xl border mb-6 relative"><p class="data-label">Payment Detail</p><p id="bank-details" contenteditable="true" class="text-[10px] font-black italic">BANK INFO MISSING</p></div>
-                    <div><p class="data-label">Authorized Signature</p><canvas id="sig-canvas" width="250" height="80"></canvas><button onclick="clearSig()" class="no-print text-[8px] font-black text-slate-400 uppercase mt-2">[ Clear Signature ]</button></div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border mb-6"><p class="data-label">Payment & Banking Info</p><p id="bank-details" contenteditable="true" class="text-[10px] font-black italic">BANKING INFO HERE</p></div>
+                    <div><p class="data-label">Authorized Signature</p><canvas id="sig-canvas" width="250" height="80"></canvas><button onclick="clearSig()" class="no-print text-[8px] font-black text-slate-400 uppercase mt-2">[ Clear ]</button></div>
                 </div>
-                <div class="text-right"><div class="bg-slate-900 text-white p-10 min-w-[280px] shadow-2xl"><p class="data-label text-indigo-400">Total Investment (RM)</p><p id="grand-total" class="text-6xl font-black italic">0.00</p></div></div>
+                <div class="text-right"><div class="bg-slate-900 text-white p-10 min-w-[280px] shadow-2xl"><p class="data-label text-indigo-400">Grand Total (RM)</p><p id="grand-total" class="text-6xl font-black italic">0.00</p></div></div>
             </div>
         </div>
     </main>
 
-    <div id="blast-modal" class="hidden fixed inset-0 bg-slate-900/95 z-[950] flex items-center justify-center p-6 text-slate-900">
+    <div id="db-modal" class="hidden fixed inset-0 bg-slate-950/98 z-[1000] flex items-center justify-center p-6 text-slate-900">
+        <div class="bg-white rounded-[3rem] p-10 w-full max-w-6xl shadow-2xl overflow-y-auto max-h-[95vh]">
+            <div class="flex justify-between items-center mb-10"><h3 class="text-3xl font-black uppercase italic">Master Database Hub</h3><button onclick="toggleDb()" class="text-3xl font-black">×</button></div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="bg-slate-50 p-8 rounded-[2rem] border">
+                    <h4 class="text-[11px] font-black text-indigo-600 uppercase mb-6 italic tracking-widest">Inventory Easy-Fill (Auto Sync)</h4>
+                    <div class="space-y-3">
+                        <input id="f-inv-n" placeholder="Item Name" class="w-full p-3 rounded-xl border text-xs font-bold uppercase">
+                        <input id="f-inv-d" placeholder="Full Description" class="w-full p-3 rounded-xl border text-xs font-bold uppercase">
+                        <div class="flex gap-2">
+                            <input id="f-inv-s" placeholder="Selling Price" class="flex-1 p-3 rounded-xl border text-xs font-bold">
+                            <input id="f-inv-c" placeholder="Cost Price" class="flex-1 p-3 rounded-xl border text-xs font-bold">
+                        </div>
+                        <button onclick="quickAdd('INV')" class="w-full bg-indigo-600 text-white py-4 rounded-xl font-black uppercase text-[10px]">Add To Inventory Option</button>
+                    </div>
+                    <div id="inv-list-box" class="mt-6 space-y-2 max-h-40 overflow-y-auto custom-scroll pr-2"></div>
+                </div>
+
+                <div class="bg-slate-50 p-8 rounded-[2rem] border">
+                    <h4 class="text-[11px] font-black text-emerald-600 uppercase mb-6 italic tracking-widest">Client Quick-Fill Database</h4>
+                    <div class="space-y-3">
+                        <input id="f-cli-n" placeholder="Client Name" class="w-full p-3 rounded-xl border text-xs font-bold uppercase">
+                        <input id="f-cli-a" placeholder="Full Address" class="w-full p-3 rounded-xl border text-xs font-bold uppercase">
+                        <input id="f-cli-p" placeholder="WhatsApp Phone" class="w-full p-3 rounded-xl border text-xs font-bold">
+                        <button onclick="quickAdd('CLI')" class="w-full bg-emerald-600 text-white py-4 rounded-xl font-black uppercase text-[10px]">Add To Client Option</button>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-50 p-8 rounded-[2rem] border md:col-span-2">
+                    <h4 class="text-[11px] font-black text-indigo-600 uppercase mb-6 italic tracking-widest">Setting Business Detail & Payment Info</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div><p class="text-[9px] font-black mb-1 uppercase">Business Name</p><input id="f-biz-n" class="w-full p-3 rounded-xl border text-xs font-bold uppercase bg-white"></div>
+                        <div><p class="text-[9px] font-black mb-1 uppercase">Business Address</p><input id="f-biz-a" class="w-full p-3 rounded-xl border text-xs font-bold uppercase bg-white"></div>
+                        <div><p class="text-[9px] font-black mb-1 uppercase">Reg No / Bank Info</p><input id="f-biz-r" class="w-full p-3 rounded-xl border text-xs font-bold uppercase bg-white"></div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 p-8 rounded-[2rem] border md:col-span-2">
+                    <h4 class="text-[11px] font-black text-indigo-400 uppercase mb-6 italic tracking-widest">Box To Put Key Activation & Plan</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div><p class="text-[9px] font-black text-white/50 mb-1 uppercase">Activation Date</p><input id="sub-start" type="date" class="w-full p-3 rounded-xl border text-xs font-bold"></div>
+                        <div><p class="text-[9px] font-black text-white/50 mb-1 uppercase">Subscription Type</p><select id="sub-tier" class="w-full p-3 rounded-xl border text-xs font-bold"><option value="MONTH">Monthly Access</option><option value="YEAR">Yearly Access</option></select></div>
+                        <div><p class="text-[9px] font-black text-white/50 mb-1 uppercase">Activation Key</p><input id="master-key" type="password" placeholder="ENTER KEY" class="w-full p-3 rounded-xl border text-xs font-bold"></div>
+                    </div>
+                </div>
+            </div>
+            <button onclick="saveDb()" class="w-full bg-indigo-600 text-white py-6 rounded-3xl font-black uppercase italic shadow-2xl mt-10">Sync Everything</button>
+        </div>
+    </div>
+
+    <div id="blast-modal" class="hidden fixed inset-0 bg-slate-900/98 z-[1500] flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white rounded-[3rem] p-10 w-full max-w-6xl shadow-2xl overflow-y-auto max-h-[90vh]">
-            <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic tracking-tighter">Auto-Pilot <span class="text-green-500">Pro</span></h3><button onclick="toggleBlast()" class="text-3xl font-black">×</button></div>
+            <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic">WhatsApp Auto-Pilot</h3><button onclick="toggleBlast()" class="text-3xl font-black">×</button></div>
             <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
                 <div class="md:col-span-4 space-y-6">
                     <div class="bg-slate-50 p-6 rounded-[2rem] border">
                         <p class="text-[10px] font-bold text-slate-400 mb-2 uppercase italic">Delay (0-999s)</p>
                         <input type="number" id="blast-delay" value="5" min="0" max="999" class="w-full bg-white border p-4 rounded-2xl font-black text-center text-lg mb-4 outline-none">
-                        <p class="text-[10px] font-bold text-slate-400 mb-2 uppercase italic">Attachment Image</p>
-                        <input type="file" id="blast-img-select" class="w-full text-[10px] font-black bg-white p-4 rounded-2xl border mb-6">
-                        <button id="auto-pilot-btn" onclick="startAutoPilot()" class="w-full py-5 bg-green-600 text-white rounded-[2rem] font-black text-sm uppercase italic">One-Click Auto-Send</button>
+                        <p class="text-[10px] font-bold text-slate-400 mb-2 uppercase italic">Message Image</p>
+                        <input type="file" id="blast-img" class="w-full text-[10px] font-black bg-white p-4 rounded-2xl border mb-6">
+                        <button id="auto-pilot-btn" onclick="startAutoPilot()" class="w-full py-5 bg-green-600 text-white rounded-2xl font-black text-sm uppercase italic">1-Click Auto Blast</button>
                     </div>
                 </div>
-                <div class="md:col-span-8"><textarea id="blast-msg" class="w-full h-40 bg-slate-50 rounded-[2rem] p-6 text-sm font-bold italic border mb-6">Hello [Name], your invoice RM [Total] is ready.</textarea><div id="blast-list" class="space-y-2 h-64 overflow-y-auto custom-scroll"></div></div>
+                <div class="md:col-span-8"><textarea id="blast-msg" class="w-full h-40 bg-slate-50 rounded-[2rem] p-6 text-sm font-bold border mb-6">Hello [Name], your document total: RM [Total].</textarea><div id="blast-list" class="space-y-2 h-64 overflow-y-auto custom-scroll pr-2"></div></div>
             </div>
         </div>
     </div>
 
-    <div id="db-modal" class="hidden fixed inset-0 bg-slate-950/95 z-[900] flex items-center justify-center p-6 text-slate-900">
-        <div class="bg-white rounded-[3rem] p-10 w-full max-w-6xl shadow-2xl overflow-y-auto max-h-[95vh]">
-            <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic tracking-tighter">System Database Hub</h3><button onclick="toggleDb()" class="text-3xl font-black">×</button></div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
-                <div class="bg-slate-50 p-6 rounded-3xl border"><h4 class="text-[10px] font-black text-indigo-600 uppercase mb-4 italic">Inventory + Cost Sync</h4><div class="flex gap-2 mb-2"><input id="f-inv-n" placeholder="Item" class="flex-1 p-3 rounded-xl border text-xs font-bold uppercase"><input id="f-inv-s" placeholder="Sell" class="w-20 p-3 rounded-xl border text-xs font-bold"></div><div class="flex gap-2"><input id="f-inv-c" placeholder="Cost Price" class="flex-1 p-3 rounded-xl border text-xs font-bold"><button onclick="quickAdd('INV')" class="bg-indigo-600 text-white px-6 rounded-xl font-black uppercase text-[10px]">Add Option</button></div></div>
-                <div class="bg-slate-50 p-6 rounded-3xl border"><h4 class="text-[10px] font-black text-emerald-600 uppercase mb-4 italic">Client Quick Fill</h4><div class="flex gap-2"><input id="f-cli-n" placeholder="Name" class="flex-1 p-3 rounded-xl border text-xs font-bold uppercase"><input id="f-cli-p" placeholder="WhatsApp" class="w-32 p-3 rounded-xl border text-xs font-bold"><button onclick="quickAdd('CLI')" class="bg-emerald-600 text-white px-6 rounded-xl font-black uppercase text-[10px]">Add Option</button></div></div>
-                
-                <div class="bg-indigo-50 p-8 rounded-3xl border md:col-span-2"><h4 class="text-xs font-black text-indigo-600 uppercase mb-6 italic tracking-tighter">Business Details & Payment Info</h4><div class="grid grid-cols-1 md:grid-cols-3 gap-6"><input id="f-biz-n" placeholder="CO NAME" class="p-3 rounded-xl border text-xs font-bold bg-white uppercase"><input id="f-biz-a" placeholder="ADDRESS" class="p-3 rounded-xl border text-xs font-bold bg-white uppercase"><input id="f-biz-r" placeholder="BANK/PAYMENT INFO" class="p-3 rounded-xl border text-xs font-bold bg-white uppercase"></div></div>
-
-                <div class="bg-slate-900 p-8 rounded-3xl md:col-span-2">
-                    <h4 class="text-xs font-black text-indigo-400 uppercase mb-6 italic">Box To Put Key Activation & Plan</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div><p class="text-[9px] font-black mb-2 text-white italic">ACTIVATION DATE</p><input id="sub-start" type="date" class="w-full p-3 rounded-xl border text-xs font-bold bg-white"></div>
-                        <div><p class="text-[9px] font-black mb-2 text-white italic">PLAN TYPE</p><select id="sub-tier" class="w-full p-3 rounded-xl border text-xs font-bold bg-white"><option value="MONTH">Monthly</option><option value="YEAR">Yearly</option></select></div>
-                        <div><p class="text-[9px] font-black mb-2 text-white italic">ACTIVATION KEY</p><input id="master-key" type="password" placeholder="Key..." class="w-full p-3 rounded-xl border text-xs font-bold bg-white"></div>
-                    </div>
-                </div>
-            </div>
-            <button onclick="saveDb()" class="w-full bg-slate-900 text-white py-5 rounded-3xl font-black uppercase italic shadow-2xl">Sync All Changes</button>
-        </div>
-    </div>
-
-    <div id="report-modal" class="hidden fixed inset-0 bg-slate-900/95 z-[990] flex items-center justify-center p-6 text-slate-900"><div class="bg-white rounded-[3rem] p-10 w-full max-w-5xl shadow-2xl overflow-y-auto max-h-[90vh]"><div class="flex justify-between items-center mb-10"><h3 class="text-3xl font-black uppercase italic">Monthly Metrics Report</h3><button onclick="toggleReport()" class="text-3xl font-black">×</button></div><div id="report-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div></div></div>
+    <div id="report-modal" class="hidden fixed inset-0 bg-slate-900/98 z-[1600] flex items-center justify-center p-6 text-slate-900"><div class="bg-white rounded-[3rem] p-12 w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl"><div class="flex justify-between items-center mb-10"><h3 class="text-3xl font-black uppercase italic">Monthly Metrics</h3><button onclick="toggleReport()" class="text-3xl font-black">×</button></div><div id="report-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div></div></div>
 
     <script>
         let inventory = []; let clients = []; let history = []; let isAuto = false; let queueIdx = 0;
@@ -165,38 +195,110 @@
 
         function unlockApp() { if (document.getElementById('sys-pass').value === "1234") { document.getElementById('security-lock').classList.add('hidden'); sessionStorage.setItem('chrono_auth', 'true'); } }
 
-        // CORE REPAIR FUNCTIONS
-        function addRow() { 
-            const row = document.createElement('tr'); 
-            row.innerHTML = `<td class="p-4"><div contenteditable="true">ITEM</div><div contenteditable="true" class="text-[10px] text-slate-400">DESC</div></td><td class="text-center p-4 font-black" contenteditable="true" oninput="calc()">1</td><td class="text-right p-4 font-bold" contenteditable="true" oninput="calc()">0.00</td><td class="text-right p-4 font-black">0.00</td><td class="no-print"><button onclick="this.parentElement.parentElement.remove(); calc()">×</button></td>`; 
+        // CORE SYNC & REPAIR
+        function addRow(itemData = null) { 
+            const row = document.createElement('tr');
+            const name = itemData ? itemData.n : "NEW ITEM";
+            const desc = itemData ? itemData.d : "DESCRIPTION";
+            const sell = itemData ? itemData.s : "0.00";
+            const cost = itemData ? itemData.c : "0.00";
+
+            row.innerHTML = `<td class="p-4"><div contenteditable="true" class="font-black uppercase">${name}</div><div contenteditable="true" class="text-[10px] text-slate-400 italic">${desc}</div><input type="hidden" value="${cost}"></td><td class="text-center p-4 font-black" contenteditable="true" oninput="calc()">1</td><td class="text-right p-4 font-bold" contenteditable="true" oninput="calc()">${sell}</td><td class="text-right p-4 font-black">${sell}</td><td class="no-print"><button onclick="this.parentElement.parentElement.remove(); calc()" class="text-red-500 font-bold">×</button></td>`; 
             document.getElementById('item-list').appendChild(row); 
+            calc();
         }
 
         function calc() { let t = 0; document.querySelectorAll("#item-list tr").forEach(r => { const q = parseFloat(r.cells[1].innerText) || 0, p = parseFloat(r.cells[2].innerText) || 0; r.cells[3].innerText = (q*p).toFixed(2); t += q*p; }); document.getElementById('grand-total').innerText = t.toFixed(2); }
 
         function saveToLedger(type, name = null, amt = null) { 
-            const entry = { id: Date.now(), type: type, client: name || document.getElementById('c-name').innerText, total: amt || parseFloat(document.getElementById('grand-total').innerText), date: new Date().toLocaleDateString(), status: document.getElementById('status-select').value }; 
-            history.push(entry); localStorage.setItem('chrono_history', JSON.stringify(history)); renderLedger(); alert("Document Saved Successfully."); 
+            const rows = document.querySelectorAll("#item-list tr");
+            let totalCost = 0;
+            rows.forEach(r => {
+                const q = parseFloat(r.cells[1].innerText) || 0;
+                const c = parseFloat(r.querySelector('input').value) || 0;
+                totalCost += (q * c);
+            });
+
+            const entry = { id: Date.now(), type: type, client: name || document.getElementById('c-name').innerText, total: amt || parseFloat(document.getElementById('grand-total').innerText), cost: totalCost, date: new Date().toLocaleDateString(), status: document.getElementById('status-select').value }; 
+            history.push(entry); localStorage.setItem('chrono_history', JSON.stringify(history)); renderLedger(); alert("Saved & Synced with Monthly Report."); 
         }
 
-        function promptExpense() { const n = prompt("Cost Item Name:"); if(n) { const a = parseFloat(prompt("Cost Amount:")); if(!isNaN(a)) saveToLedger('EXPENSE', n, a); } }
+        function promptExpense() { const n = prompt("Expense Description:"); if(n) { const a = parseFloat(prompt("Amount (RM):")); if(!isNaN(a)) saveToLedger('EXPENSE', n, a); } }
 
         function secureClearToday() {
-            if(prompt("System Password Required:") === "1234") {
+            if(prompt("Enter Password to Wipe Today's Data:") === "1234") {
                 const today = new Date().toLocaleDateString();
                 history = (JSON.parse(localStorage.getItem('chrono_history')) || []).filter(i => i.date !== today);
                 localStorage.setItem('chrono_history', JSON.stringify(history));
-                renderLedger(); alert("Financials for " + today + " cleared.");
+                renderLedger(); alert("Today's financial cache cleared.");
             }
         }
 
+        // BUILDER SYNC
         function updateSyncStatus(v) { 
             document.getElementById('doc-status-badge').innerText = v; 
             document.getElementById('doc-status-badge').className = `status-badge status-${v}`; 
-            document.getElementById('dynamic-title').innerText = v === 'OVERDUE' ? 'INVOICE' : (v === 'PAID' ? 'OFFICIAL RECEIPT' : 'QUOTATION'); 
+            document.getElementById('dynamic-title').innerText = (v === 'OVERDUE' || v === 'PENDING') ? 'INVOICE' : (v === 'PAID' ? 'OFFICIAL RECEIPT' : 'QUOTATION'); 
         }
 
-        function applySyncClient(idx) { if(!idx) return; const c = clients[idx]; document.getElementById('c-name').innerText = c.n; document.getElementById('c-addr').innerText = c.a || "CLIENT ADDRESS"; }
+        function applySyncClient(idx) { if(!idx) return; const c = clients[idx]; document.getElementById('c-name').innerText = c.n; document.getElementById('c-addr').innerText = c.a; }
+
+        // DATABASE ACTIONS
+        function quickAdd(type) {
+            if(type === 'INV') {
+                const item = { n: document.getElementById('f-inv-n').value, d: document.getElementById('f-inv-d').value, s: document.getElementById('f-inv-s').value, c: document.getElementById('f-inv-c').value };
+                inventory.push(item); localStorage.setItem('v9_inv', JSON.stringify(inventory));
+            } else {
+                const cli = { n: document.getElementById('f-cli-n').value, a: document.getElementById('f-cli-a').value, ph: document.getElementById('f-cli-p').value };
+                clients.push(cli); localStorage.setItem('v9_cli', JSON.stringify(clients));
+            }
+            renderDbLists();
+        }
+
+        function renderDbLists() {
+            document.getElementById('inv-list-box').innerHTML = inventory.map((it, i) => `<button onclick="addRow(inventory[${i}])" class="w-full p-3 bg-white border rounded-xl text-[10px] font-black uppercase text-left hover:bg-indigo-50 flex justify-between"><span>${it.n}</span> <span class="text-indigo-600">RM ${it.s}</span></button>`).join('');
+            document.getElementById('client-dropdown').innerHTML = '<option value="">Select Client Database...</option>' + clients.map((c, i) => `<option value="${i}">${c.n}</option>`).join('');
+        }
+
+        function saveDb() { 
+            localStorage.setItem('chrono_identity', JSON.stringify({ n: document.getElementById('f-biz-n').value, a: document.getElementById('f-biz-a').value, r: document.getElementById('f-biz-r').value }));
+            localStorage.setItem('sub_start', document.getElementById('sub-start').value); localStorage.setItem('sub_tier', document.getElementById('sub-tier').value);
+            syncData(); toggleDb(); 
+        }
+
+        function syncData() { 
+            const biz = JSON.parse(localStorage.getItem('chrono_identity')) || {n:'BIZ', a:'HQ', r:'REG INFO'};
+            document.getElementById('f-biz-n').value = biz.n; document.getElementById('f-biz-a').value = biz.a; document.getElementById('f-biz-r').value = biz.r;
+            document.getElementById('set-comp-name').innerText = biz.n; document.getElementById('set-comp-addr').innerText = biz.a; document.getElementById('set-comp-reg').innerText = "REG: " + biz.r; document.getElementById('bank-details').innerText = biz.r;
+            inventory = JSON.parse(localStorage.getItem('v9_inv')) || []; clients = JSON.parse(localStorage.getItem('v9_cli')) || [];
+            renderDbLists(); renderLedger(); checkSub();
+        }
+
+        // FINANCIAL REPORT
+        function renderLedger() { 
+            history = JSON.parse(localStorage.getItem('chrono_history')) || []; let r = 0, e = 0; 
+            history.forEach(i => { if(i.type==='EXPENSE') e += i.total; else if(i.status==='PAID') { r += i.total; e += (i.cost || 0); } }); 
+            document.getElementById('stat-revenue').innerText = `RM ${r.toFixed(2)}`; document.getElementById('stat-expense').innerText = `RM ${e.toFixed(2)}`; 
+            document.getElementById('stat-profit').innerText = `RM ${(r-e).toFixed(2)}`; 
+        }
+
+        function toggleReport() { 
+            document.getElementById('report-modal').classList.toggle('hidden'); 
+            if(!document.getElementById('report-modal').classList.contains('hidden')) {
+                const months = {}; history.forEach(item => { const date = new Date(item.date); const key = `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`; if(!months[key]) months[key] = { r: 0, e: 0 }; if(item.type === 'EXPENSE') months[key].e += item.total; else if(item.status === 'PAID') { months[key].r += item.total; months[key].e += (item.cost || 0); } });
+                document.getElementById('report-grid').innerHTML = Object.entries(months).map(([n, d]) => `<div class="p-8 bg-slate-50 border-2 rounded-[2rem]"><div><p class="text-[10px] font-black text-indigo-500 mb-2 uppercase">${n}</p><p class="text-xs">Sales: <span class="text-emerald-600 font-bold">RM ${d.r.toFixed(2)}</span></p><p class="text-xs">Total Costs: <span class="text-red-500 font-bold">RM ${d.e.toFixed(2)}</span></p></div><div class="mt-6 pt-6 border-t font-black text-2xl italic tracking-tighter">RM ${(d.r-d.e).toFixed(2)}</div><p class="text-[8px] font-bold text-slate-400 mt-1 uppercase">Net Profit</p></div>`).join('');
+            }
+        }
+
+        // WHATSAPP
+        function startAutoPilot() { if(isAuto) { isAuto = false; document.getElementById('auto-pilot-btn').innerText = "1-Click Auto Blast"; return; } isAuto = true; queueIdx = 0; runQueue(); }
+        async function runQueue() {
+            if(!isAuto || queueIdx >= clients.length) { isAuto = false; document.getElementById('auto-pilot-btn').innerText = "1-Click Auto Blast"; return; }
+            const c = clients[queueIdx]; const delay = parseInt(document.getElementById('blast-delay').value) * 1000;
+            const msg = document.getElementById('blast-msg').value.replace(/\[Name\]/g, c.n).replace(/\[Total\]/g, document.getElementById('grand-total').innerText);
+            window.open(`https://wa.me/${c.ph.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
+            document.getElementById(`status-${queueIdx}`).innerText = "SENT"; queueIdx++; setTimeout(runQueue, delay);
+        }
 
         // SIGNATURE
         function initSignature() { 
@@ -205,69 +307,20 @@
             const move = (e) => { if(!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); };
             const stop = () => drawing = false;
             canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', move); window.addEventListener('mouseup', stop);
-            canvas.addEventListener('touchstart', start); canvas.addEventListener('touchmove', move); canvas.addEventListener('touchend', stop);
             ctx.lineWidth = 2; ctx.strokeStyle = '#0f172a';
         }
 
-        function startAutoPilot() {
-            if(isAuto) { isAuto = false; document.getElementById('auto-pilot-btn').innerText = "One-Click Auto-Send"; return; }
-            isAuto = true; queueIdx = 0; document.getElementById('auto-pilot-btn').innerText = "STOPPING..."; runQueue();
-        }
-
-        async function runQueue() {
-            if(!isAuto || queueIdx >= clients.length) { isAuto = false; document.getElementById('auto-pilot-btn').innerText = "One-Click Auto-Send"; return; }
-            const c = clients[queueIdx]; const delay = parseInt(document.getElementById('blast-delay').value) * 1000;
-            const msg = document.getElementById('blast-msg').value.replace(/\[Name\]/g, c.n).replace(/\[Total\]/g, document.getElementById('grand-total').innerText);
-            window.open(`https://wa.me/${c.ph.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
-            document.getElementById(`status-${queueIdx}`).innerText = "SENT"; queueIdx++; setTimeout(runQueue, delay);
-        }
-
-        function quickAdd(type) {
-            if(type === 'INV') localStorage.setItem('v72_inv', (localStorage.getItem('v72_inv')||'') + `\n${document.getElementById('f-inv-n').value} | Cost: ${document.getElementById('f-inv-c').value} | ${document.getElementById('f-inv-s').value}`);
-            else localStorage.setItem('v72_cli', (localStorage.getItem('v72_cli')||'') + `\n${document.getElementById('f-cli-n').value} | Addr | ${document.getElementById('f-cli-p').value}`);
-            alert("Database Updated. Save to Sync.");
-        }
-
-        function syncData() { 
-            const biz = JSON.parse(localStorage.getItem('chrono_identity')) || {n:'BIZ', a:'HQ', r:'BANK INFO'};
-            document.getElementById('f-biz-n').value = biz.n; document.getElementById('f-biz-a').value = biz.a; document.getElementById('f-biz-r').value = biz.r;
-            document.getElementById('set-comp-name').innerText = biz.n; document.getElementById('set-comp-addr').innerText = biz.a; document.getElementById('bank-details').innerText = biz.r;
-            clients = (localStorage.getItem('v72_cli') || "").split('\n').filter(l => l.includes('|')).map(l => { const p = l.split('|'); return { n: p[0].trim(), ph: p[2].trim(), a: p[1].trim() }; }); 
-            document.getElementById('client-dropdown').innerHTML = '<option value="">Sync Client...</option>' + clients.map((c, i) => `<option value="${i}">${c.n}</option>`).join(''); 
-            renderLedger(); checkSubscription();
-        }
-
-        function renderLedger() { 
-            history = JSON.parse(localStorage.getItem('chrono_history')) || []; let r = 0, e = 0; 
-            history.forEach(i => { if(i.type==='EXPENSE') e+=i.total; else if(i.status==='PAID') r+=i.total; }); 
-            document.getElementById('stat-revenue').innerText = `RM ${r.toFixed(2)}`; document.getElementById('stat-expense').innerText = `RM ${e.toFixed(2)}`; 
-            document.getElementById('stat-profit').innerText = `RM ${(r-e).toFixed(2)}`; 
-        }
-
-        function toggleReport() { 
-            document.getElementById('report-modal').classList.toggle('hidden'); 
-            if(!document.getElementById('report-modal').classList.contains('hidden')) {
-                const months = {}; history.forEach(item => { const date = new Date(item.date); const key = `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`; if(!months[key]) months[key] = { r: 0, e: 0 }; if(item.type === 'EXPENSE') months[key].e += item.total; else if(item.status === 'PAID') months[key].r += item.total; });
-                document.getElementById('report-grid').innerHTML = Object.entries(months).map(([n, d]) => `<div class="p-6 bg-slate-50 border rounded-3xl"><div><p class="text-[9px] font-black text-indigo-500 mb-2 uppercase">${n}</p><p class="text-xs">Rev: <span class="text-emerald-500">RM ${d.r.toFixed(2)}</span></p><p class="text-xs">Exp: <span class="text-red-500">RM ${d.e.toFixed(2)}</span></p></div><div class="mt-4 pt-4 border-t font-black text-lg italic">RM ${(d.r-d.e).toFixed(2)}</div></div>`).join('');
-            }
-        }
-
-        function checkSubscription() {
+        function checkSub() {
             const start = localStorage.getItem('sub_start');
             if(!start) return; const diff = Math.floor((new Date() - new Date(start)) / (1000*60*60*24));
             const limit = localStorage.getItem('sub_tier') === 'YEAR' ? 365 : 30;
             if((limit - diff) < 5) document.getElementById('renew-badge').style.display = 'block';
         }
 
-        function saveDb() { 
-            localStorage.setItem('chrono_identity', JSON.stringify({ n: document.getElementById('f-biz-n').value, a: document.getElementById('f-biz-a').value, r: document.getElementById('f-biz-r').value }));
-            localStorage.setItem('sub_start', document.getElementById('sub-start').value); localStorage.setItem('chrono_key', document.getElementById('master-key').value);
-            localStorage.setItem('sub_tier', document.getElementById('sub-tier').value); syncData(); toggleDb(); 
-        }
-
-        function toggleBlast() { document.getElementById('blast-modal').classList.toggle('hidden'); if(!document.getElementById('blast-modal').classList.contains('hidden')) renderBlastList(); }
-        function renderBlastList() { document.getElementById('blast-list').innerHTML = clients.map((c, i) => `<div class="p-4 bg-slate-50 rounded-2xl flex justify-between border mb-2"><p class="text-[10px] font-black">${c.n}</p><span id="status-${i}" class="text-[8px] font-black text-slate-400">QUEUED</span></div>`).join(''); }
         function toggleDb() { document.getElementById('db-modal').classList.toggle('hidden'); }
+        function toggleBlast() { document.getElementById('blast-modal').classList.toggle('hidden'); if(!document.getElementById('blast-modal').classList.contains('hidden')) renderBlastList(); }
+        function renderBlastList() { document.getElementById('blast-list').innerHTML = clients.map((c, i) => `<div class="p-4 bg-slate-50 border rounded-2xl flex justify-between"><p class="text-xs font-black uppercase">${c.n}</p><span id="status-${i}" class="text-[8px] font-black text-slate-400">QUEUED</span></div>`).join(''); }
+        function toggleReport() { document.getElementById('report-modal').classList.toggle('hidden'); }
         function generatePDF() { html2pdf().from(document.getElementById('document-content')).save(); }
         function clearSig() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
         window.onload = () => { if (sessionStorage.getItem('chrono_auth') === 'true') document.getElementById('security-lock').classList.add('hidden'); syncData(); initSignature(); };
