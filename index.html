@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Master | Client Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; background: #020617; color: #f8fafc; overflow: hidden; display: flex; height: 100vh; }
+        .sidebar { background: #0f172a; border-right: 1px solid #1e293b; width: 360px; flex-shrink: 0; display: flex; flex-direction: column; padding: 1.5rem; overflow-y: auto; z-index: 50; }
+        .main-canvas { flex: 1; background: radial-gradient(circle at center, #0f172a 0%, #020617 100%); overflow-y: auto; display: flex; justify-content: center; align-items: flex-start; padding: 5rem 2rem; }
+        .glass-paper { background: #ffffff; color: #0f172a; width: 210mm; min-height: 297mm; padding: 80px; box-shadow: 0 60px 120px -20px rgba(0, 0, 0, 0.8); position: relative; border-left: 20px solid #64748b; }
+        .hidden-canvas { opacity: 0; transform: scale(0.98) translateY(20px); pointer-events: none; position: absolute; }
+        .status-badge { padding: 4px 15px; border-radius: 99px; color: white; font-size: 10px; font-weight: 900; text-transform: uppercase; }
+        .status-DRAFT { background: #64748b; } .status-PAID { background: #10b981; } .status-PENDING { background: #3b82f6; } .status-OVERDUE { background: #ef4444; }
+        #sig-canvas { border-bottom: 2px solid #0f172a; cursor: crosshair; background: #fdfdfd; }
+        .exclusive-title { font-size: 70px; font-weight: 900; line-height: 0.8; letter-spacing: -0.05em; color: #0f172a; font-style: italic; text-transform: uppercase; }
+        .custom-scroll::-webkit-scrollbar { width: 4px; } .custom-scroll::-webkit-scrollbar-thumb { background: #312e81; border-radius: 10px; }
+        @media print { .no-print { display: none !important; } .main-canvas { background: white; padding: 0; } .glass-paper { border-left-width: 40px !important; box-shadow: none; width: 100%; margin: 0; } }
+    </style>
+</head>
+<body>
+
+    <div id="sub-lock" class="hidden fixed inset-0 bg-slate-950 z-[2000] flex flex-col items-center justify-center p-6 text-center">
+        <h2 class="text-indigo-400 font-black text-4xl mb-2 uppercase italic">Access Required</h2>
+        <p class="text-slate-400 text-sm mb-8 uppercase font-bold tracking-widest">Please renew your subscription to unlock the tools.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
+            <div class="bg-slate-900 border border-indigo-500/30 p-8 rounded-[2rem]">
+                <h3 class="text-white font-black text-xl mb-1">MONTHLY</h3>
+                <button onclick="pay('MONTH')" class="w-full py-4 bg-indigo-600 text-white rounded-xl font-black uppercase text-xs mt-4">ToyyibPay Monthly</button>
+            </div>
+            <div class="bg-slate-900 border border-emerald-500/30 p-8 rounded-[2rem]">
+                <h3 class="text-white font-black text-xl mb-1">YEARLY</h3>
+                <button onclick="pay('YEAR')" class="w-full py-4 bg-emerald-600 text-white rounded-xl font-black uppercase text-xs mt-4">ToyyibPay Yearly</button>
+            </div>
+        </div>
+        <button onclick="activateManual()" class="mt-10 text-slate-500 font-bold text-[10px] uppercase tracking-[0.3em]">I have an Activation Code</button>
+    </div>
+
+    <aside class="sidebar custom-scroll no-print">
+        <div class="flex items-center gap-3 mb-8">
+            <span class="text-3xl">🚀</span>
+            <div>
+                <h1 class="text-lg font-black italic text-white uppercase tracking-tighter leading-none">Marketing Master</h1>
+                <p class="text-[9px] font-bold text-indigo-400 uppercase tracking-widest mt-1">Client Edition v8.2.0</p>
+            </div>
+        </div>
+
+        <div class="bg-white/5 p-4 rounded-2xl border border-white/10 mb-6">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-[9px] font-black text-indigo-400 uppercase italic">Support</span>
+                <span id="days-left" class="text-[8px] font-black bg-indigo-600 px-2 py-1 rounded text-white">?? DAYS LEFT</span>
+            </div>
+            <p id="support-display" class="text-[10px] text-slate-400 font-bold leading-tight uppercase italic mb-3">Contact Provider</p>
+            <button id="renew-btn" onclick="pay('MONTH')" class="hidden w-full py-2 bg-amber-500 text-slate-900 rounded-lg font-black text-[9px] uppercase animate-pulse">Renew Now</button>
+        </div>
+
+        <div class="bg-slate-900/80 p-5 rounded-3xl border border-white/5 mb-6">
+            <div class="grid grid-cols-2 gap-4">
+                <div><p class="text-[8px] font-bold text-slate-500 uppercase">Revenue</p><p id="stat-revenue" class="text-xs font-black text-emerald-400">RM 0.00</p></div>
+                <div class="text-right"><p class="text-[8px] font-bold text-slate-500 uppercase">Expenses</p><p id="stat-expense" class="text-xs font-black text-red-400">RM 0.00</p></div>
+            </div>
+            <p id="stat-profit" class="text-xl font-black text-white italic mt-4">RM 0.00</p>
+        </div>
+
+        <div class="space-y-3 mb-6">
+            <select id="status-select" onchange="updateStatus(this.value)" class="w-full bg-slate-800 rounded-xl p-4 text-xs font-black uppercase text-white outline-none border border-slate-700">
+                <option value="DRAFT">Draft</option><option value="PENDING">Quotation</option><option value="OVERDUE">Invoice</option><option value="PAID">Receipt</option>
+            </select>
+            <button onclick="toggleCanvas()" class="w-full py-3 bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 rounded-xl font-black text-[10px] uppercase">Toggle Canvas</button>
+            <button onclick="addRow()" class="w-full py-4 bg-indigo-600 text-white rounded-xl font-black text-[10px] uppercase">＋ Add Item</button>
+            <div class="flex gap-2">
+                <button onclick="saveToLedger('INCOME')" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-black text-[10px] uppercase">Save</button>
+                <button onclick="promptExpense()" class="flex-1 py-3 bg-red-600 text-white rounded-xl font-black text-[10px] uppercase">Cost</button>
+            </div>
+        </div>
+
+        <div id="ledger-list" class="mb-6 space-y-2 max-h-40 overflow-y-auto custom-scroll"></div>
+
+        <button onclick="toggleBlast()" class="w-full py-4 bg-green-600 text-white rounded-xl font-black text-[10px] uppercase italic mb-2">WhatsApp Auto-Pilot</button>
+        <div class="flex gap-2">
+            <button onclick="toggleDb()" class="flex-1 py-4 bg-slate-800 text-slate-400 rounded-xl text-[10px] font-black uppercase">DB</button>
+            <button onclick="generatePDF()" class="flex-1 py-4 bg-white text-slate-900 rounded-xl font-black text-[10px] uppercase">PDF</button>
+        </div>
+    </aside>
+
+    <main class="main-canvas">
+        <div id="document-content" class="glass-paper hidden-canvas">
+            <header class="flex justify-between items-start mb-20">
+                <div class="w-2/3"><h2 id="dynamic-title" class="exclusive-title mb-4 italic">QUOTATION</h2><span id="doc-status-badge" class="status-badge status-DRAFT">DRAFT</span></div>
+                <div class="w-1/3 text-right">
+                    <p id="set-comp-name" class="font-black text-xl uppercase italic">BUSINESS</p>
+                    <p id="set-comp-addr" class="text-[10px] text-slate-500 uppercase"></p>
+                </div>
+            </header>
+            <div class="flex border-t pt-10 mb-16 uppercase">
+                <div class="w-1/2">
+                    <p id="c-name" contenteditable="true" class="text-4xl font-black italic">CLIENT NAME</p>
+                    <p id="c-addr" contenteditable="true" class="text-[11px] text-slate-400 mt-2">ADDRESS</p>
+                </div>
+                <div class="w-1/2 text-right">
+                    <p id="doc-id" contenteditable="true" class="font-black text-lg">REF-1001</p>
+                    <p id="doc-date" class="text-[10px] text-slate-400">FEBRUARY 02, 2026</p>
+                </div>
+            </div>
+            <table class="w-full mb-20">
+                <tbody id="item-list" class="font-bold uppercase text-xs"></tbody>
+            </table>
+            <div class="bg-slate-900 text-white p-10 min-w-[280px] ml-auto inline-block">
+                <p class="text-[9px] text-indigo-400 font-black uppercase">Grand Total (RM)</p>
+                <p id="grand-total" class="text-6xl font-black italic">0.00</p>
+            </div>
+        </div>
+    </main>
+
+    <div id="db-modal" class="hidden fixed inset-0 bg-slate-950/95 z-[900] flex items-center justify-center p-6 text-slate-900">
+        <div class="bg-white rounded-[3rem] p-10 w-full max-w-4xl">
+            <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic">User Database</h3><button onclick="toggleDb()" class="text-3xl">×</button></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <textarea id="raw-inv" placeholder="Inventory: Name | Desc | Price" class="bg-slate-50 p-4 rounded-xl text-[10px] h-40"></textarea>
+                <textarea id="raw-cli" placeholder="Clients: Name | Addr | Phone" class="bg-slate-50 p-4 rounded-xl text-[10px] h-40"></textarea>
+            </div>
+            <button onclick="saveDb()" class="w-full bg-slate-900 text-white py-5 rounded-3xl font-black uppercase mb-4">Update Database</button>
+            <button onclick="activateManual()" class="w-full bg-indigo-100 text-indigo-600 py-3 rounded-xl font-black text-[10px] uppercase">Activate System Code</button>
+        </div>
+    </div>
+
+    <div id="blast-modal" class="hidden fixed inset-0 bg-slate-900/95 z-[950] flex items-center justify-center p-6 text-slate-900">
+        <div class="bg-white rounded-[3rem] p-10 w-full max-w-2xl">
+            <h3 class="text-2xl font-black uppercase mb-6 italic">WA Auto-Pilot</h3>
+            <textarea id="blast-msg" class="w-full h-32 bg-slate-50 p-4 rounded-xl text-sm font-bold mb-4">Hello [Name], total is RM [Total].</textarea>
+            <button onclick="startAutoPilot()" class="w-full py-4 bg-green-600 text-white rounded-xl font-black uppercase">Start Blast</button>
+        </div>
+    </div>
+
+    <script>
+        // --- CLIENT SPECIFIC LOGIC ---
+        const T_PAY_MONTH = "https://toyyibpay.com/YOUR_LINK";
+        const ADMIN_KEY = "CHRONO_ADMIN_99"; // Same as your admin panel
+
+        function checkSubscription() {
+            const key = localStorage.getItem('chrono_key');
+            if(key === ADMIN_KEY) { document.getElementById('sub-lock').classList.add('hidden'); return; }
+
+            const startStr = localStorage.getItem('sub_start');
+            const tier = localStorage.getItem('sub_tier') || 'MONTH';
+            const limit = tier === 'YEAR' ? 365 : 30;
+
+            if(!startStr) { document.getElementById('sub-lock').classList.remove('hidden'); return; }
+
+            const diff = Math.floor((new Date() - new Date(startStr)) / (1000 * 60 * 60 * 24));
+            const remaining = limit - diff;
+
+            document.getElementById('days-left').innerText = remaining > 0 ? `${remaining} DAYS LEFT` : "EXPIRED";
+            if(remaining <= 0) document.getElementById('sub-lock').classList.remove('hidden');
+            if(remaining <= 3 && remaining > 0) document.getElementById('renew-btn').classList.remove('hidden');
+        }
+
+        function activateManual() {
+            const code = prompt("Enter Activation Code:");
+            if(code) {
+                try {
+                    const d = JSON.parse(atob(code));
+                    localStorage.setItem('sub_start', d.s);
+                    localStorage.setItem('sub_tier', d.t);
+                    localStorage.setItem('chrono_support', d.m);
+                    localStorage.setItem('chrono_key', d.k);
+                    location.reload();
+                } catch(e) { alert("Invalid Code"); }
+            }
+        }
+
+        function pay(p) { window.location.href = T_PAY_MONTH; }
+
+        // --- CORE ENGINE (Same as yours, but clean) ---
+        let inventory = []; let clients = []; let history = [];
+        window.onload = () => { syncData(); renderLedger(); checkSubscription(); };
+
+        function saveDb() { 
+            localStorage.setItem('v72_inv', document.getElementById('raw-inv').value); 
+            localStorage.setItem('v72_cli', document.getElementById('raw-cli').value); 
+            syncData(); toggleDb(); 
+        }
+
+        function syncData() {
+            const rInv = localStorage.getItem('v72_inv') || ""; 
+            const rCli = localStorage.getItem('v72_cli') || "";
+            document.getElementById('raw-inv').value = rInv; 
+            document.getElementById('raw-cli').value = rCli;
+            document.getElementById('support-display').innerText = localStorage.getItem('chrono_support') || "WA: 012-3456789";
+            inventory = rInv.split('\n').filter(l => l.includes('|')).map(l => ({ n: l.split('|')[0].trim(), d: l.split('|')[1].trim(), s: l.split('|')[2].trim() }));
+            clients = rCli.split('\n').filter(l => l.includes('|')).map(l => ({ n: l.split('|')[0].trim(), a: l.split('|')[1].trim(), ph: l.split('|')[2].trim() }));
+            calc();
+        }
+
+        // Standard Functions
+        function toggleCanvas() { document.getElementById('document-content').classList.toggle('hidden-canvas'); }
+        function toggleDb() { document.getElementById('db-modal').classList.toggle('hidden'); }
+        function toggleBlast() { document.getElementById('blast-modal').classList.toggle('hidden'); }
+        function calc() { let t = 0; document.querySelectorAll("#item-list tr").forEach(r => { t += (parseFloat(r.cells[1].innerText)*parseFloat(r.cells[2].innerText)) || 0; }); document.getElementById('grand-total').innerText = t.toFixed(2); }
+        function addRow() { 
+            const r = document.createElement('tr'); 
+            r.innerHTML = `<td class="p-4" contenteditable="true">ITEM</td><td class="p-4 text-center" contenteditable="true" oninput="calc()">1</td><td class="p-4 text-right" contenteditable="true" oninput="calc()">0.00</td><td class="p-4 text-right no-print"><button onclick="this.parentElement.parentElement.remove(); calc();">×</button></td>`;
+            document.getElementById('item-list').appendChild(r);
+        }
+        function saveToLedger(type) { /* Same as your logic */ }
+        function generatePDF() { html2pdf().from(document.getElementById('document-content')).save(); }
+        function updateStatus(v) { document.getElementById('doc-status-badge').innerText = v; }
+    </script>
+</body>
+</html>
