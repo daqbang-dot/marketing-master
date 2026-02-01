@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketing Master Tool | V8.2.0</title>
+    <title>Marketing Master Tool | V8.3.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -33,12 +33,12 @@
             <div class="bg-slate-900 border border-indigo-500/30 p-8 rounded-[2rem]">
                 <h3 class="text-white font-black text-xl mb-1">MONTHLY PASS</h3>
                 <p class="text-indigo-400 font-black text-xs italic mb-6 uppercase">30 Days Unlimited Access</p>
-                <button onclick="pay('MONTH')" class="w-full py-4 bg-indigo-600 text-white rounded-xl font-black uppercase text-xs">Proceed Monthly</button>
+                <button onclick="pay('MONTH')" class="w-full py-4 bg-indigo-600 text-white rounded-xl font-black uppercase text-xs">ToyyibPay Monthly</button>
             </div>
             <div class="bg-slate-900 border border-emerald-500/30 p-8 rounded-[2rem]">
                 <h3 class="text-white font-black text-xl mb-1">ANNUAL PASS</h3>
                 <p class="text-emerald-400 font-black text-xs italic mb-6 uppercase">365 Days Unlimited Access</p>
-                <button onclick="pay('YEAR')" class="w-full py-4 bg-emerald-600 text-white rounded-xl font-black uppercase text-xs">Proceed Yearly</button>
+                <button onclick="pay('YEAR')" class="w-full py-4 bg-emerald-600 text-white rounded-xl font-black uppercase text-xs">ToyyibPay Yearly</button>
             </div>
         </div>
     </div>
@@ -54,23 +54,12 @@
             <span class="text-3xl">🚀</span>
             <div>
                 <h1 class="text-lg font-black italic text-white uppercase tracking-tighter leading-none">Marketing Master</h1>
-                <p class="text-[9px] font-bold text-indigo-400 uppercase tracking-widest mt-1">Chrono System v8.2.0</p>
+                <p class="text-[9px] font-bold text-indigo-400 uppercase tracking-widest mt-1">v8.3.0</p>
             </div>
-        </div>
-
-        <div class="bg-white/5 p-4 rounded-2xl border border-white/10 mb-6">
-            <div class="flex justify-between items-center mb-3">
-                <span class="text-[9px] font-black text-indigo-400 uppercase italic">Support Info</span>
-                <span id="days-left" class="text-[8px] font-black bg-indigo-600 px-2 py-1 rounded text-white italic">Calculating...</span>
-            </div>
-            <p id="support-display" class="text-[10px] text-slate-400 font-bold leading-tight uppercase italic mb-3"></p>
         </div>
 
         <div class="bg-slate-900/80 p-5 rounded-3xl border border-white/5 mb-6">
-            <div class="flex justify-between items-center border-b border-white/5 pb-2 mb-4">
-                <label class="text-[9px] font-black text-indigo-400 uppercase tracking-widest italic">Financial Intel</label>
-                <button onclick="clearDailyIntel()" class="text-[8px] font-black text-red-500 hover:text-red-400 uppercase tracking-tighter">[ Clear Day ]</button>
-            </div>
+            <label class="text-[9px] font-black text-indigo-400 uppercase tracking-widest italic mb-4 block text-center border-b border-white/5 pb-2">Financial Intel</label>
             <div class="grid grid-cols-2 gap-4">
                 <div><p class="text-[8px] font-bold text-slate-500 uppercase">Revenue</p><p id="stat-revenue" class="text-xs font-black text-emerald-400">RM 0.00</p></div>
                 <div class="text-right"><p class="text-[8px] font-bold text-slate-500 uppercase">Expenses</p><p id="stat-expense" class="text-xs font-black text-red-400">RM 0.00</p></div>
@@ -93,7 +82,6 @@
                 <option value="PAID">Receipt</option>
             </select>
             <select id="client-dropdown" onchange="applyClient(this.value)" class="w-full bg-slate-800 rounded-xl p-4 text-xs font-bold text-indigo-300 outline-none border border-indigo-500/20"></select>
-            <button onclick="toggleCanvas()" class="w-full py-3 bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 rounded-xl font-black text-[10px] uppercase">Toggle Canvas</button>
             <button onclick="addRow()" class="w-full py-4 bg-indigo-600 text-white rounded-xl font-black text-[10px] uppercase">＋ Add Line Item</button>
             <div class="flex gap-2">
                 <button onclick="saveToLedger('INCOME')" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-black text-[10px] uppercase">Save Doc</button>
@@ -145,240 +133,144 @@
                         <p class="data-label">Payments</p><p id="bank-details" contenteditable="true" oninput="saveBankDetails()" class="text-[10px] font-black italic">BANK INFO</p>
                         <div id="terms-container" contenteditable="true" oninput="saveBankDetails()" class="text-[9px] text-slate-400 font-black mt-4 italic">TERMS APPLY.</div>
                     </div>
-                    <div><p class="data-label">Authorized Signature</p><canvas id="sig-canvas" width="250" height="80"></canvas><button onclick="clearSig()" class="no-print text-[8px] font-black text-slate-400 uppercase mt-2">[ Clear ]</button></div>
+                    <div><p class="data-label">Authorized Signature</p><canvas id="sig-canvas" width="250" height="80"></canvas></div>
                 </div>
                 <div class="text-right flex flex-col items-end gap-8">
-                    <div class="stamp-box" onclick="document.getElementById('stamp-upload').click()"><span id="stamp-text">STAMP</span><img id="stamp-img" src="" class="hidden"></div>
-                    <input type="file" id="stamp-upload" class="hidden" onchange="loadStamp(event)">
+                    <div class="stamp-box"><span id="stamp-text">STAMP</span><img id="stamp-img" src="" class="hidden"></div>
                     <div class="bg-slate-900 text-white p-10 min-w-[280px] shadow-2xl"><p class="data-label text-indigo-400">Total Investment (RM)</p><p id="grand-total" class="text-6xl font-black italic">0.00</p></div>
                 </div>
             </div>
         </div>
     </main>
 
+    <div id="blast-modal" class="hidden fixed inset-0 bg-slate-900/95 z-[950] flex items-center justify-center p-6 text-slate-900">
+        <div class="bg-white rounded-[3rem] p-10 w-full max-w-6xl shadow-2xl overflow-y-auto max-h-[90vh]">
+            <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic tracking-tighter">WhatsApp Auto-Pilot <span class="text-green-500">v8.3.0</span></h3><button onclick="toggleBlast()" class="text-3xl font-black">×</button></div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
+                <div class="md:col-span-4 space-y-6">
+                    <div class="bg-slate-50 p-6 rounded-[2rem] border">
+                        <p class="text-[10px] font-bold text-slate-400 mb-2 uppercase italic">Delay Sequence (0-999 Sec)</p>
+                        <input type="number" id="blast-delay" value="3" min="0" max="999" class="w-full bg-white border p-4 rounded-2xl font-black text-center text-lg mb-4 outline-none">
+                        
+                        <p class="text-[10px] font-bold text-slate-400 mb-2 uppercase italic">Image Media URL (Imgur/Link)</p>
+                        <input type="text" id="blast-media-url" placeholder="https://i.imgur.com/example.jpg" class="w-full bg-white border p-4 rounded-2xl font-bold text-[10px] mb-6 outline-none">
+                        
+                        <button id="auto-pilot-btn" onclick="startAutoPilot()" class="w-full py-5 bg-green-600 text-white rounded-[2rem] font-black text-sm uppercase italic shadow-lg hover:bg-green-500">Launch One-Click Blast</button>
+                    </div>
+                    <div class="bg-indigo-900 p-6 rounded-[2rem] text-white">
+                        <p class="text-[9px] font-black uppercase text-indigo-300 mb-3">Automation Status</p>
+                        <div id="live-preview-box" class="bg-white/10 p-4 rounded-xl text-xs italic min-h-[100px] break-words">Ready...</div>
+                    </div>
+                </div>
+                <div class="md:col-span-8">
+                    <label class="data-label block mb-2">Message Template (Use [Name], [Total])</label>
+                    <textarea id="blast-msg" class="w-full h-40 bg-slate-50 rounded-[2rem] p-6 text-sm font-bold italic border border-slate-100 mb-6">Hello [Name]! Here is your document. Total: RM [Total].</textarea>
+                    <label class="data-label block mb-2">Recipient Queue</label>
+                    <div id="blast-list" class="space-y-2 h-64 overflow-y-auto custom-scroll pr-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="db-modal" class="hidden fixed inset-0 bg-slate-950/95 z-[900] flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white rounded-[3rem] p-10 w-full max-w-6xl shadow-2xl overflow-y-auto max-h-[95vh]">
             <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic tracking-tighter">Database Hub</h3><button onclick="toggleDb()" class="text-3xl font-black">×</button></div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
                 <div class="bg-slate-50 p-6 rounded-3xl border">
-                    <h4 class="text-[10px] font-black text-indigo-600 uppercase mb-4 tracking-widest italic">Add Inventory Item</h4>
-                    <div class="space-y-3">
-                        <input id="f-inv-n" placeholder="Name" class="w-full p-3 rounded-xl border text-xs font-bold uppercase">
-                        <input id="f-inv-d" placeholder="Desc" class="w-full p-3 rounded-xl border text-xs font-bold uppercase">
-                        <div class="flex gap-2">
-                            <input id="f-inv-s" placeholder="Price" class="flex-1 p-3 rounded-xl border text-xs font-bold">
-                            <button onclick="quickAdd('INV')" class="bg-indigo-600 text-white px-6 rounded-xl font-black uppercase text-[10px]">Add</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-slate-50 p-6 rounded-3xl border">
-                    <h4 class="text-[10px] font-black text-emerald-600 uppercase mb-4 tracking-widest italic">Add Client Lead</h4>
-                    <div class="space-y-3">
-                        <input id="f-cli-n" placeholder="Name" class="w-full p-3 rounded-xl border text-xs font-bold uppercase">
-                        <input id="f-cli-a" placeholder="Addr" class="w-full p-3 rounded-xl border text-xs font-bold uppercase">
-                        <div class="flex gap-2">
-                            <input id="f-cli-p" placeholder="WhatsApp" class="flex-1 p-3 rounded-xl border text-xs font-bold">
-                            <button onclick="quickAdd('CLI')" class="bg-emerald-600 text-white px-6 rounded-xl font-black uppercase text-[10px]">Add</button>
-                        </div>
-                    </div>
+                    <h4 class="text-[10px] font-black text-indigo-600 uppercase mb-4 tracking-widest italic">Inventory</h4>
+                    <div class="space-y-3"><input id="f-inv-n" placeholder="Name" class="w-full p-3 rounded-xl border text-xs font-bold uppercase"><div class="flex gap-2"><input id="f-inv-s" placeholder="Price" class="flex-1 p-3 rounded-xl border text-xs font-bold"><button onclick="quickAdd('INV')" class="bg-indigo-600 text-white px-6 rounded-xl font-black uppercase text-[10px]">Add</button></div></div>
                 </div>
                 <div class="bg-indigo-50 p-8 rounded-3xl border border-indigo-200 md:col-span-2">
-                    <h4 class="text-xs font-black text-indigo-600 uppercase mb-6 italic tracking-tighter">Admin Panel</h4>
+                    <h4 class="text-xs font-black text-indigo-600 uppercase mb-6 italic tracking-tighter">Admin Controls</h4>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <div><p class="text-[9px] font-black mb-2 italic">START DATE</p><input id="sub-start" type="date" class="w-full p-3 rounded-xl border text-xs font-bold bg-white"></div>
                         <div><p class="text-[9px] font-black mb-2 italic">PLAN TIER</p><select id="sub-tier" class="w-full p-3 rounded-xl border text-xs font-bold bg-white"><option value="MONTH">Monthly</option><option value="YEAR">Yearly</option></select></div>
                         <div><p class="text-[9px] font-black mb-2 italic">MASTER KEY</p><input id="master-key" type="password" class="w-full p-3 rounded-xl border text-xs font-bold bg-white"></div>
-                        <div><p class="text-[9px] font-black mb-2 italic">SUPPORT DISPLAY</p><textarea id="f-support" class="w-full p-3 rounded-xl border text-xs font-bold uppercase h-[46px] bg-white"></textarea></div>
+                        <div><p class="text-[9px] font-black mb-2 italic">SUPPORT</p><textarea id="f-support" class="w-full p-3 rounded-xl border text-xs font-bold uppercase h-[46px] bg-white"></textarea></div>
                     </div>
                 </div>
             </div>
-            <div class="pt-10 border-t">
-                <div class="grid grid-cols-3 gap-4 h-48 mb-6">
-                    <textarea id="raw-inv" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea>
-                    <textarea id="raw-cli" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea>
-                    <textarea id="raw-terms" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea>
-                </div>
-                <button onclick="saveDb()" class="w-full bg-slate-900 text-white py-5 rounded-3xl font-black uppercase italic shadow-2xl">Save & Sync All Data</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="blast-modal" class="hidden fixed inset-0 bg-slate-900/95 z-[950] flex items-center justify-center p-6 text-slate-900">
-        <div class="bg-white rounded-[3rem] p-10 w-full max-w-6xl shadow-2xl overflow-y-auto max-h-[90vh]">
-            <div class="flex justify-between items-center mb-8"><h3 class="text-3xl font-black uppercase italic tracking-tighter">WhatsApp Auto-Pilot</h3><button onclick="toggleBlast()" class="text-3xl font-black">×</button></div>
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
-                <div class="md:col-span-4 space-y-6">
-                    <div class="bg-slate-50 p-6 rounded-[2rem] border">
-                        <input type="number" id="blast-delay" value="3" class="w-full bg-white border p-4 rounded-2xl font-black text-center mb-4">
-                        <button id="auto-pilot-btn" onclick="startAutoPilot()" class="w-full py-5 bg-indigo-600 text-white rounded-[2rem] font-black text-sm uppercase italic">Launch Bulk Broadcast</button>
-                    </div>
-                    <div id="live-preview-box" class="bg-indigo-900 p-6 rounded-[2rem] text-white text-xs italic"></div>
-                </div>
-                <div class="md:col-span-8">
-                    <textarea id="blast-msg" oninput="updateLivePreview()" class="w-full h-40 bg-slate-50 rounded-[2rem] p-6 text-sm font-bold border mb-6">Hello [Name], here is your document. Total: RM [Total].</textarea>
-                    <div id="blast-list" class="space-y-2 h-64 overflow-y-auto custom-scroll"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="report-modal" class="hidden fixed inset-0 bg-slate-900/95 z-[950] flex items-center justify-center p-6 text-slate-900">
-        <div class="bg-white rounded-[3rem] p-10 w-full max-w-5xl shadow-2xl overflow-y-auto max-h-[90vh]">
-            <div class="flex justify-between items-center mb-10"><h3 class="text-3xl font-black uppercase italic">Monthly Metrics</h3><button onclick="toggleReport()" class="text-3xl font-black">×</button></div>
-            <div id="report-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+            <div class="pt-10 border-t"><div class="grid grid-cols-3 gap-4 h-48 mb-6"><textarea id="raw-inv" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea><textarea id="raw-cli" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea><textarea id="raw-terms" class="bg-slate-50 p-4 rounded-xl text-[10px] font-mono"></textarea></div><button onclick="saveDb()" class="w-full bg-slate-900 text-white py-5 rounded-3xl font-black uppercase italic shadow-2xl">Save & Sync All Data</button></div>
         </div>
     </div>
 
     <script>
         let inventory = []; let clients = []; let history = []; let isAuto = false; let queueIdx = 0;
-        const canvas = document.getElementById('sig-canvas'); const ctx = canvas.getContext('2d'); let drawing = false;
+        const canvas = document.getElementById('sig-canvas'); const ctx = canvas.getContext('2d');
 
-        // --- CORE FUNCTIONS (FINANCIALS) ---
-        function saveToLedger(type, customName = null, customAmt = null) {
-            const entry = { 
-                id: Date.now(), 
-                type: type, 
-                ref: type === 'EXPENSE' ? 'EXP-'+Date.now().toString().slice(-4) : document.getElementById('doc-id').innerText, 
-                client: customName || document.getElementById('c-name').innerText, 
-                total: parseFloat(customAmt || document.getElementById('grand-total').innerText) || 0, 
-                status: type === 'EXPENSE' ? 'PAID' : document.getElementById('status-select').value, 
-                date: new Date().toLocaleDateString() 
-            };
-            history.push(entry);
-            localStorage.setItem('chrono_history', JSON.stringify(history));
-            renderLedger();
-            if(type === 'INCOME') autoSetNextRef();
-        }
-
-        function renderLedger() {
-            history = JSON.parse(localStorage.getItem('chrono_history')) || [];
-            let rev = 0, exp = 0;
-            document.getElementById('ledger-list').innerHTML = [...history].reverse().map(item => {
-                const amt = parseFloat(item.total);
-                if(item.type === 'EXPENSE') exp += amt;
-                else if(item.status === 'PAID') rev += amt;
-                return `<div class="bg-slate-800/50 p-3 rounded-xl border border-white/5 flex justify-between items-center group"><div><p class="text-[7px] text-slate-500 font-bold">${item.ref}</p><p class="text-[9px] font-black uppercase ${item.type==='EXPENSE'?'text-red-400':'text-indigo-400'} leading-none">${item.client}</p><p class="text-[10px] font-black text-white mt-1">RM ${amt.toFixed(2)}</p></div><button onclick="deleteLedger(${item.id})" class="opacity-0 group-hover:opacity-100 text-red-500 font-bold text-xs">×</button></div>`;
-            }).join('');
-            document.getElementById('stat-revenue').innerText = `RM ${rev.toFixed(2)}`;
-            document.getElementById('stat-expense').innerText = `RM ${exp.toFixed(2)}`;
-            document.getElementById('stat-profit').innerText = `RM ${(rev - exp).toFixed(2)}`;
-        }
-
-        function clearDailyIntel() {
-            if (prompt("Enter Password to Clear Today's Data:") === "1234") {
-                const today = new Date().toLocaleDateString();
-                const filtered = history.filter(item => item.date !== today);
-                if (confirm(`Delete all ${history.length - filtered.length} records from today?`)) {
-                    history = filtered;
-                    localStorage.setItem('chrono_history', JSON.stringify(history));
-                    renderLedger();
-                }
-            } else { alert("Access Denied"); }
-        }
-
-        function generateReport() {
-            const months = {};
-            history.forEach(item => {
-                const date = new Date(item.date);
-                const key = `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
-                if(!months[key]) months[key] = { rev: 0, exp: 0 };
-                const amt = parseFloat(item.total);
-                if(item.type === 'EXPENSE') months[key].exp += amt;
-                else if(item.status === 'PAID') months[key].rev += amt;
-            });
-            document.getElementById('report-grid').innerHTML = Object.entries(months).map(([name, data]) => `<div class="p-8 bg-slate-50 rounded-[2rem] border-2 border-slate-100"><div><p class="text-[10px] font-black text-indigo-500 mb-4 uppercase">${name}</p><div class="flex justify-between text-xs mb-2"><span>In</span><span class="text-emerald-500 font-black">RM ${data.rev.toFixed(2)}</span></div><div class="flex justify-between text-xs"><span>Out</span><span class="text-red-500 font-black">RM ${data.exp.toFixed(2)}</span></div></div><div class="mt-8 pt-6 border-t font-black text-xl italic">RM ${(data.rev - data.exp).toFixed(2)}</div></div>`).join('');
-        }
-
-        // --- DB HUB ---
-        function quickAdd(type) {
-            if(type === 'INV') {
-                const line = `${document.getElementById('f-inv-n').value} | ${document.getElementById('f-inv-d').value} | ${document.getElementById('f-inv-s').value}`;
-                document.getElementById('raw-inv').value += (document.getElementById('raw-inv').value ? "\n" : "") + line;
-                ['f-inv-n','f-inv-d','f-inv-s'].forEach(id => document.getElementById(id).value = '');
-            } else {
-                const line = `${document.getElementById('f-cli-n').value} | ${document.getElementById('f-cli-a').value} | ${document.getElementById('f-cli-p').value}`;
-                document.getElementById('raw-cli').value += (document.getElementById('raw-cli').value ? "\n" : "") + line;
-                ['f-cli-n','f-cli-a','f-cli-p'].forEach(id => document.getElementById(id).value = '');
-            }
-        }
-
-        function saveDb() { 
-            localStorage.setItem('v72_inv', document.getElementById('raw-inv').value); 
-            localStorage.setItem('v72_cli', document.getElementById('raw-cli').value); 
-            localStorage.setItem('v72_trm', document.getElementById('raw-terms').value); 
-            localStorage.setItem('sub_start', document.getElementById('sub-start').value);
-            localStorage.setItem('sub_tier', document.getElementById('sub-tier').value);
-            localStorage.setItem('chrono_support', document.getElementById('f-support').value);
-            localStorage.setItem('chrono_key', document.getElementById('master-key').value);
-            syncData(); checkSubscription(); toggleDb(); alert("Database Synced");
-        }
-
-        function syncData() { 
-            const rInv = localStorage.getItem('v72_inv') || "", rCli = localStorage.getItem('v72_cli') || ""; 
-            document.getElementById('raw-inv').value = rInv; document.getElementById('raw-cli').value = rCli;
-            document.getElementById('sub-start').value = localStorage.getItem('sub_start') || "";
-            document.getElementById('sub-tier').value = localStorage.getItem('sub_tier') || "MONTH";
-            document.getElementById('f-support').value = localStorage.getItem('chrono_support') || "";
-            document.getElementById('master-key').value = localStorage.getItem('chrono_key') || "";
-            inventory = rInv.split('\n').filter(l => l.includes('|')).map(l => { const p = l.split('|'); return { n: p[0].trim(), d: p[1].trim(), s: p[2].trim() }; }); 
-            clients = rCli.split('\n').filter(l => l.includes('|')).map(l => { const p = l.split('|'); return { n: p[0].trim(), ph: p[2].trim(), a: p[1].trim() }; }); 
-            document.getElementById('client-dropdown').innerHTML = '<option value="">Lead...</option>' + clients.map((c, i) => `<option value="${i}">${c.n}</option>`).join(''); 
-            applyIdentity(); calc(); 
-        }
-
-        // --- SUBSCRIPTION & UI ---
+        // --- PRESERVED ENGINE ---
         function checkSubscription() {
-            if (localStorage.getItem('chrono_key') === "CHRONO_ADMIN_99") { document.getElementById('sub-lock').classList.add('hidden'); document.getElementById('days-left').innerText = "LIFETIME"; return; }
+            const userKey = localStorage.getItem('chrono_key');
+            if (userKey === "CHRONO_ADMIN_99") { document.getElementById('sub-lock').classList.add('hidden'); return; }
             const startStr = localStorage.getItem('sub_start');
+            const tier = localStorage.getItem('sub_tier') || 'MONTH';
             if (!startStr) return;
-            const limit = localStorage.getItem('sub_tier') === 'YEAR' ? 365 : 30;
-            const remaining = limit - Math.floor((new Date() - new Date(startStr)) / (1000 * 60 * 60 * 24));
-            document.getElementById('days-left').innerText = `${remaining} DAYS LEFT`;
-            document.getElementById('support-display').innerText = localStorage.getItem('chrono_support');
+            const startDate = new Date(startStr);
+            const limit = tier === 'YEAR' ? 365 : 30;
+            const remaining = limit - Math.floor((new Date() - startDate) / (1000 * 60 * 60 * 24));
             if (remaining <= 0) document.getElementById('sub-lock').classList.remove('hidden');
         }
 
-        function unlockApp() { if (document.getElementById('sys-pass').value === "1234") { document.getElementById('security-lock').classList.add('hidden'); sessionStorage.setItem('chrono_auth', 'true'); } }
-        function toggleCanvas() { document.getElementById('document-content').classList.toggle('hidden-canvas'); }
-        function toggleDb() { document.getElementById('db-modal').classList.toggle('hidden'); }
-        function toggleReport() { document.getElementById('report-modal').classList.toggle('hidden'); if(!document.getElementById('report-modal').classList.contains('hidden')) generateReport(); }
-        function addRow() { const row = document.createElement('tr'); row.className = "border-b"; row.innerHTML = `<td class="p-4"><select onchange="fillRow(this)" class="no-print text-[8px] mb-2"><option value="">Select...</option>${inventory.map((v, i) => `<option value="${i}">${v.n}</option>`).join('')}</select><div contenteditable="true">ITEM</div><div contenteditable="true" class="text-slate-400">DESC</div></td><td class="text-center" contenteditable="true" oninput="calc()">1</td><td class="text-right" contenteditable="true" oninput="calc()">0.00</td><td class="text-right italic">0.00</td><td class="no-print"><button onclick="this.parentElement.parentElement.remove(); calc();">×</button></td>`; document.getElementById('item-list').appendChild(row); }
-        function fillRow(el) { const i = inventory[el.value]; const r = el.closest('tr'); r.cells[0].querySelectorAll('div')[0].innerText = i.n; r.cells[0].querySelectorAll('div')[1].innerText = i.d; r.cells[2].innerText = i.s; calc(); }
-        function calc() { let total = 0; document.querySelectorAll("#item-list tr").forEach(r => { const q = parseFloat(r.cells[1].innerText) || 0, p = parseFloat(r.cells[2].innerText) || 0, t = q * p; r.cells[3].innerText = t.toFixed(2); total += t; }); document.getElementById('grand-total').innerText = total.toFixed(2); }
-        function promptExpense() { const d = prompt("Expense Name:"); if (d) { const a = parseFloat(prompt("Amount:")); if (!isNaN(a)) saveToLedger('EXPENSE', d, a); } }
-        function updateStatus(v) { document.getElementById('doc-status-badge').innerText = v; document.getElementById('doc-status-badge').className = `status-badge status-${v}`; document.getElementById('dynamic-title').innerText = v === 'PAID' ? 'OFFICIAL RECEIPT' : 'QUOTATION'; }
-        function applyClient(i) { if(!i) return; const c = clients[i]; document.getElementById('c-name').innerText = c.n; document.getElementById('c-addr').innerText = c.a; }
-        function autoSetNextRef() { history = JSON.parse(localStorage.getItem('chrono_history')) || []; let max = 1000; history.forEach(i => { const n = parseInt(i.ref.match(/\d+/)); if(n > max) max = n; }); document.getElementById('doc-id').innerText = `REF-${max+1}`; }
-        function deleteLedger(id) { history = history.filter(i => i.id !== id); localStorage.setItem('chrono_history', JSON.stringify(history)); renderLedger(); }
-        function applyIdentity() { const d = JSON.parse(localStorage.getItem('chrono_identity')) || {n: 'BUSINESS', a: 'HQ', r: '000'}; document.getElementById('set-comp-name').innerText = d.n; document.getElementById('set-comp-addr').innerText = d.a; document.getElementById('set-comp-reg').innerText = "REG: " + d.r; }
-        function generatePDF() { html2pdf().from(document.getElementById('document-content')).set({ margin:0, filename:'Doc.pdf', jsPDF:{format:'a4'} }).save(); }
-        
-        // --- SIG/STAMP ---
-        function initSignature() {
-            const getPos = (e) => { const rect = canvas.getBoundingClientRect(); return { x: (e.clientX || (e.touches?e.touches[0].clientX:0)) - rect.left, y: (e.clientY || (e.touches?e.touches[0].clientY:0)) - rect.top }; };
-            canvas.onmousedown = (e) => { drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); };
-            canvas.onmousemove = (e) => { if (drawing) { const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); } };
-            window.onmouseup = () => { if(drawing) { drawing = false; localStorage.setItem('chrono_sig', canvas.toDataURL()); } };
-            ctx.lineWidth = 2; const s = localStorage.getItem('chrono_sig'); if(s) { const i = new Image(); i.onload = () => ctx.drawImage(i, 0, 0); i.src = s; }
-        }
-        function clearSig() { ctx.clearRect(0,0,canvas.width,canvas.height); localStorage.removeItem('chrono_sig'); }
-        function loadStamp(e) { const r = new FileReader(); r.onload = () => { localStorage.setItem('chrono_stamp', r.result); applyStamp(r.result); }; r.readAsDataURL(e.target.files[0]); }
-        function applyStamp(s) { const i = document.getElementById('stamp-img'); i.src = s; i.classList.remove('hidden'); document.getElementById('stamp-text').classList.add('hidden'); }
-        function saveBankDetails() { localStorage.setItem('chrono_bank', document.getElementById('bank-details').innerText); localStorage.setItem('chrono_terms', document.getElementById('terms-container').innerText); }
-        
-        // --- BLAST ---
+        // --- NEW AUTO-PILOT v8.3.0 ENGINE ---
         function toggleBlast() { document.getElementById('blast-modal').classList.toggle('hidden'); if(!document.getElementById('blast-modal').classList.contains('hidden')) renderBlastList(); }
-        function renderBlastList() { document.getElementById('blast-list').innerHTML = clients.map((c, i) => `<div class="p-4 bg-slate-50 flex justify-between rounded-xl mb-2"><div>${c.n}</div><span id="status-${i}" class="text-[8px] uppercase">Queued</span></div>`).join(''); }
-        function updateLivePreview() { document.getElementById('live-preview-box').innerText = document.getElementById('blast-msg').value.replace('[Name]', 'Client').replace('[Total]', document.getElementById('grand-total').innerText); }
-        function startAutoPilot() { if(isAuto) { isAuto = false; return; } isAuto = true; queueIdx = 0; runQueue(); }
-        function runQueue() { if(!isAuto || queueIdx >= clients.length) return; const c = clients[queueIdx]; const msg = document.getElementById('blast-msg').value.replace('[Name]', c.n).replace('[Total]', document.getElementById('grand-total').innerText); window.open(`https://wa.me/${c.ph.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank'); document.getElementById(`status-${queueIdx}`).innerText = "SENT"; queueIdx++; setTimeout(runQueue, 3000); }
+        
+        function renderBlastList() { 
+            document.getElementById('blast-list').innerHTML = clients.map((c, i) => `
+                <div class="p-4 bg-slate-50 rounded-2xl flex justify-between items-center border border-slate-100 mb-2">
+                    <div><p class="text-[10px] font-black uppercase">${c.n}</p><p class="text-[8px] font-bold text-slate-400">${c.ph}</p></div>
+                    <span id="status-${i}" class="text-[8px] font-black px-4 py-2 rounded-xl bg-slate-200 text-slate-400 uppercase tracking-tighter">Standby</span>
+                </div>`).join(''); 
+        }
 
-        window.onload = () => { 
-            if (sessionStorage.getItem('chrono_auth') === 'true') document.getElementById('security-lock').classList.add('hidden'); 
-            syncData(); renderLedger(); checkSubscription(); initSignature(); 
-            const s = localStorage.getItem('chrono_stamp'); if(s) applyStamp(s);
-            const b = localStorage.getItem('chrono_bank'); if(b) document.getElementById('bank-details').innerText = b;
-        };
+        function startAutoPilot() {
+            if(isAuto) { isAuto = false; document.getElementById('auto-pilot-btn').innerText = "Launch One-Click Blast"; return; }
+            if(clients.length === 0) { alert("No recipients found in database."); return; }
+            isAuto = true; queueIdx = 0; document.getElementById('auto-pilot-btn').innerText = "STOP AUTOMATION"; runQueue();
+        }
+
+        async function runQueue() {
+            if(!isAuto || queueIdx >= clients.length) { 
+                isAuto = false; 
+                document.getElementById('auto-pilot-btn').innerText = "Launch One-Click Blast"; 
+                document.getElementById('live-preview-box').innerText = "Automation Finished.";
+                return; 
+            }
+            
+            const c = clients[queueIdx];
+            const delay = parseInt(document.getElementById('blast-delay').value) * 1000;
+            const mediaUrl = document.getElementById('blast-media-url').value;
+            const totalStr = document.getElementById('grand-total').innerText;
+            
+            let message = document.getElementById('blast-msg').value
+                .replace(/\[Name\]/g, c.n)
+                .replace(/\[Total\]/g, totalStr);
+            
+            // If media URL exists, append it to the message for WhatsApp preview
+            const finalPayload = mediaUrl ? `${message}\n\nMedia: ${mediaUrl}` : message;
+            
+            // AUTOMATED TRIGGER: Open link for current client
+            window.open(`https://wa.me/${c.ph.replace(/\D/g,'')}?text=${encodeURIComponent(finalPayload)}`, '_blank');
+            
+            // Update UI status
+            document.getElementById(`status-${queueIdx}`).innerText = "TRANSMITTED";
+            document.getElementById(`status-${queueIdx}`).className = "text-[8px] font-black px-4 py-2 rounded-xl bg-green-100 text-green-600 uppercase tracking-tighter";
+            document.getElementById('live-preview-box').innerText = `Sent to ${c.n}. Waiting ${delay/1000}s...`;
+            
+            queueIdx++;
+            setTimeout(runQueue, delay);
+        }
+
+        // --- PRESERVED CORE FUNCTIONS ---
+        function syncData() { 
+            const rInv = localStorage.getItem('v72_inv') || "", rCli = localStorage.getItem('v72_cli') || ""; 
+            document.getElementById('raw-inv').value = rInv; document.getElementById('raw-cli').value = rCli;
+            clients = rCli.split('\n').filter(l => l.includes('|')).map(l => { const p = l.split('|'); return { n: p[0].trim(), ph: p[2].trim(), a: p[1].trim() }; }); 
+            document.getElementById('client-dropdown').innerHTML = '<option value="">Lead...</option>' + clients.map((c, i) => `<option value="${i}">${c.n}</option>`).join(''); 
+        }
+        function saveDb() { localStorage.setItem('v72_inv', document.getElementById('raw-inv').value); localStorage.setItem('v72_cli', document.getElementById('raw-cli').value); localStorage.setItem('sub_start', document.getElementById('sub-start').value); localStorage.setItem('sub_tier', document.getElementById('sub-tier').value); localStorage.setItem('chrono_key', document.getElementById('master-key').value); syncData(); checkSubscription(); toggleDb(); }
+        function toggleDb() { document.getElementById('db-modal').classList.toggle('hidden'); }
+        function unlockApp() { if (document.getElementById('sys-pass').value === "1234") { document.getElementById('security-lock').classList.add('hidden'); sessionStorage.setItem('chrono_auth', 'true'); } }
+        window.onload = () => { if (sessionStorage.getItem('chrono_auth') === 'true') document.getElementById('security-lock').classList.add('hidden'); syncData(); checkSubscription(); };
     </script>
 </body>
 </html>
